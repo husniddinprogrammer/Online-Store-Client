@@ -1,0 +1,101 @@
+{
+  "nav": {
+    "catalog": "Каталог",
+    "search": "Қидириш",
+    "cart": "Сават",
+    "favorites": "Севимлилар",
+    "login": "Кириш",
+    "profile": "Профиль",
+    "darkMode": "Тунги режим",
+    "language": "Тил"
+  },
+  "home": {
+    "heroTitle": "Энг яхши маҳсулотлар бир жойда",
+    "heroSubtitle": "Минглаб товарлар орасидан ўзингизга мосини топинг",
+    "categories": "Категориялар",
+    "latestProducts": "Янги маҳсулотлар",
+    "viewAll": "Барчасини кўриш"
+  },
+  "product": {
+    "addToCart": "Саватга қўшиш",
+    "addedToCart": "Саватга қўшилди",
+    "inCart": "Саватда",
+    "outOfStock": "Омборда йўқ",
+    "discount": "Чегирма",
+    "rating": "Рейтинг",
+    "reviews": "шарҳлар",
+    "description": "Таснифи",
+    "similarProducts": "Ўхшаш маҳсулотлар",
+    "addToFavorites": "Севимлиларга қўшиш",
+    "removeFromFavorites": "Севимлилардан олиб ташлаш"
+  },
+  "category": {
+    "filters": "Фильтрлар",
+    "priceRange": "Нарх диапазони",
+    "minPrice": "Минимал нарх",
+    "maxPrice": "Максимал нарх",
+    "companies": "Компаниялар",
+    "apply": "Қўллаш",
+    "sortBy": "Сараламоқ",
+    "popular": "Машҳур",
+    "newest": "Янги",
+    "byRating": "Рейтинг бўйича",
+    "cheapest": "Арзон",
+    "expensive": "Қиммат",
+    "biggestDiscount": "Катта чегирма",
+    "smallestDiscount": "Кичик чегирма",
+    "noProducts": "Маҳсулотлар топилмади"
+  },
+  "cart": {
+    "title": "Саватдаги маҳсулотлар",
+    "empty": "Сават бўш",
+    "emptyDesc": "Саватингизга ҳали ҳеч нарса қўшилмаган",
+    "continueShopping": "Харид қилишни давом эттириш",
+    "total": "Жами",
+    "checkout": "Буюртма бериш",
+    "remove": "Ўчириш",
+    "quantity": "Миқдор"
+  },
+  "favorites": {
+    "title": "Севимли маҳсулотлар",
+    "empty": "Севимлилар бўш",
+    "emptyDesc": "Сиз ҳали ҳеч қандай маҳсулотни севимлиларга қўшмагансиз"
+  },
+  "auth": {
+    "login": "Кириш",
+    "register": "Рўйхатдан ўтиш",
+    "email": "Электрон почта",
+    "password": "Парол",
+    "name": "Исм",
+    "surname": "Фамилия",
+    "phone": "Телефон",
+    "birthday": "Туғилган сана",
+    "confirmPassword": "Паролни тасдиқлаш",
+    "forgotPassword": "Паролни унутдингизми?",
+    "alreadyHaveAccount": "Аккаунтингиз борми?",
+    "dontHaveAccount": "Аккаунтингиз йўқми?",
+    "loginBtn": "Кириш",
+    "registerBtn": "Рўйхатдан ўтиш",
+    "resetPassword": "Паролни тиклаш",
+    "backToLogin": "Киришга қайтиш"
+  },
+  "footer": {
+    "support": "Қўллаб-қувватлаш",
+    "address": "Манзил",
+    "pages": "Саҳифалар",
+    "home": "Бош саҳифа",
+    "categories": "Категориялар",
+    "cart": "Сават",
+    "favorites": "Севимлилар",
+    "followUs": "Бизни кузатиш",
+    "rights": "Барча ҳуқуқлар ҳимояланган"
+  },
+  "common": {
+    "loading": "Юкланмоқда...",
+    "error": "Хато юз берди",
+    "retry": "Қайта уриниш",
+    "close": "Ёпиш",
+    "save": "Сақлаш",
+    "cancel": "Бекор қилиш"
+  }
+}

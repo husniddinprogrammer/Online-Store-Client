@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(sed -n '95,105p' /c/Users/User/Desktop/online-store-client-page/online-store-client/lib/api/endpoints.ts)",
+      "Bash(sed -n '120,135p' /c/Users/User/Desktop/online-store-client-page/online-store-client/lib/api/endpoints.ts)",
+      "Bash(sed -n '140,150p' /c/Users/User/Desktop/online-store-client-page/online-store-client/lib/api/endpoints.ts)",
+      "Bash(node -e \":*)",
+      "Bash(lib/hooks/useProducts.ts:*)",
+      "Bash(components/ui/CategoryCard.tsx:*)",
+      "Bash(grep -n \"cat\\\\.image\\\\|product\\\\.mainImage\\\\|product\\\\.price\\\\b\\\\|product\\\\.stock\\\\b\\\\|product\\\\.rating\\\\b\\\\|product\\\\.commentCount\\\\|\\\\.url\\\\b\\\\|poster\\\\.image\\\\b\\\\|clickCount\\\\|poster\\\\.title\\\\|poster\\\\.description\" components/layout/Navbar.tsx app/[lang]/page.tsx app/[lang]/product/[id]/page.tsx app/[lang]/cart/page.tsx app/[lang]/favorites/page.tsx)",
+      "Bash(grep -n \"comment\\\\.user\\\\.\" app/[lang]/product/[id]/page.tsx)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\User\\Desktop\\online-store-client-page\\online-store-client\\app\\[lang]"
+    ]
+  }
+}

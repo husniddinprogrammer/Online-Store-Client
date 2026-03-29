@@ -1,0 +1,101 @@
+{
+  "nav": {
+    "catalog": "Каталог",
+    "search": "Поиск",
+    "cart": "Корзина",
+    "favorites": "Избранное",
+    "login": "Войти",
+    "profile": "Профиль",
+    "darkMode": "Тёмный режим",
+    "language": "Язык"
+  },
+  "home": {
+    "heroTitle": "Лучшие товары в одном месте",
+    "heroSubtitle": "Найдите то, что вам подходит среди тысяч товаров",
+    "categories": "Категории",
+    "latestProducts": "Новые товары",
+    "viewAll": "Смотреть все"
+  },
+  "product": {
+    "addToCart": "Добавить в корзину",
+    "addedToCart": "Добавлено в корзину",
+    "inCart": "В корзине",
+    "outOfStock": "Нет в наличии",
+    "discount": "Скидка",
+    "rating": "Рейтинг",
+    "reviews": "отзывы",
+    "description": "Описание",
+    "similarProducts": "Похожие товары",
+    "addToFavorites": "Добавить в избранное",
+    "removeFromFavorites": "Убрать из избранного"
+  },
+  "category": {
+    "filters": "Фильтры",
+    "priceRange": "Диапазон цен",
+    "minPrice": "Мин. цена",
+    "maxPrice": "Макс. цена",
+    "companies": "Компании",
+    "apply": "Применить",
+    "sortBy": "Сортировать",
+    "popular": "Популярные",
+    "newest": "Новые",
+    "byRating": "По рейтингу",
+    "cheapest": "Дешевле",
+    "expensive": "Дороже",
+    "biggestDiscount": "Большая скидка",
+    "smallestDiscount": "Малая скидка",
+    "noProducts": "Товары не найдены"
+  },
+  "cart": {
+    "title": "Товары в корзине",
+    "empty": "Корзина пуста",
+    "emptyDesc": "В вашей корзине пока ничего нет",
+    "continueShopping": "Продолжить покупки",
+    "total": "Итого",
+    "checkout": "Оформить заказ",
+    "remove": "Удалить",
+    "quantity": "Количество"
+  },
+  "favorites": {
+    "title": "Избранные товары",
+    "empty": "Избранное пусто",
+    "emptyDesc": "Вы ещё не добавили ни одного товара в избранное"
+  },
+  "auth": {
+    "login": "Вход",
+    "register": "Регистрация",
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "name": "Имя",
+    "surname": "Фамилия",
+    "phone": "Телефон",
+    "birthday": "Дата рождения",
+    "confirmPassword": "Подтверждение пароля",
+    "forgotPassword": "Забыли пароль?",
+    "alreadyHaveAccount": "Уже есть аккаунт?",
+    "dontHaveAccount": "Нет аккаунта?",
+    "loginBtn": "Войти",
+    "registerBtn": "Зарегистрироваться",
+    "resetPassword": "Сбросить пароль",
+    "backToLogin": "Вернуться к входу"
+  },
+  "footer": {
+    "support": "Поддержка",
+    "address": "Адрес",
+    "pages": "Страницы",
+    "home": "Главная",
+    "categories": "Категории",
+    "cart": "Корзина",
+    "favorites": "Избранное",
+    "followUs": "Подписывайтесь",
+    "rights": "Все права защищены"
+  },
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "retry": "Повторить",
+    "close": "Закрыть",
+    "save": "Сохранить",
+    "cancel": "Отмена"
+  }
+}

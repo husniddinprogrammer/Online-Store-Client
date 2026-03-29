@@ -1,0 +1,204 @@
+Role: Senior frontend engineer + UI/UX designer
+
+Task:
+Build a full e-commerce client frontend UI based on the following detailed structure
+
+Tech Stack:
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- React Query
+- Axios
+- Zustand
+- React Hook Form + Zod
+- Framer Motion
+
+Design:
+- Modern Material Design
+- Primary color: Blue (#2563eb or similar)
+- Clean, minimal UI
+- Responsive layout
+- clean, professional UI
+- Mobile responsive
+- Dark mode support
+- Smooth UX
+
+
+--------------------------------
+HOME PAGE
+--------------------------------
+
+Layout:
+- Navbar (top)
+- Main Section
+- Categories Section
+- Products Section
+- Footer
+- Footer Bottom
+
+Main Section:
+- Left: Poster carousel (16:9, from API, width 4/3)
+- Right: Product carousel (latest products)
+
+Categories Section:
+- Full width
+- Carousel
+- 1 row: 5–7 categories
+- Each category:
+  - Rounded image
+  - Name below image
+
+Products Section:
+- Grid layout
+- 1 row: 4–5 product cards
+- Total: 20–30 products
+
+--------------------------------
+CATEGORY PAGE
+--------------------------------
+
+Layout:
+- Navbar
+- Title
+- Left sidebar (filters)
+- Right content (products)
+- Footer
+
+Filters (left):
+- Price range (min, max inputs)
+- Company checkbox list
+- Filter button (with search icon)
+
+Right:
+- Sort select:
+  (popular, newest, rating, cheapest, expensive, biggest discount, smallest discount)
+- Pagination (1,2,3,...)
+- Product grid (4 per row)
+
+--------------------------------
+CART PAGE
+--------------------------------
+
+- Navbar
+- Title: "Savatdagi mahsulotlar"
+- Product grid (4–5 per row)
+- Footer
+
+--------------------------------
+FAVORITES PAGE
+--------------------------------
+
+- Navbar
+- Title: "Sevimli mahsulotlar"
+- Product grid (4–5 per row)
+- Footer
+
+--------------------------------
+PRODUCT DETAIL PAGE
+--------------------------------
+
+Layout:
+- Navbar
+- Product title
+
+Section 1:
+- Left: rating (stars + comment count)
+- Right: favorite button (heart icon)
+
+Section 2:
+- Left: product image gallery (carousel)
+- Center: description
+- Right: price + add to cart button
+
+Section 3:
+- Comments
+
+Section 4:
+- Similar products (4–5 per row)
+
+- Footer
+
+--------------------------------
+AUTH PAGES
+--------------------------------
+
+- Login page
+- Register page
+
+--------------------------------
+COMPONENTS
+--------------------------------
+
+Product Card:
+- Image
+- Top-right: heart icon (favorites)
+  - If logged in → API call
+  - If not → store in localStorage
+- Top-left: discount badge (%)
+- Product name
+- Price:
+  - If discount:
+    - original price (line-through)
+    - discounted price
+  - Else: normal price
+- Add to cart button (icon + rounded)
+
+Navbar:
+- Logo
+- Catalog button → opens popover categories
+- Search input
+- Cart icon → navigate to cart
+- Favorites icon → navigate to favorites
+- Language switch (globe icon)
+- Profile icon:
+  - If logged in → cabinet
+  - Else → login
+
+Footer:
+- Left: logo, support phone, address
+- Center: pages (links)
+- Right: social icons
+
+Footer Bottom:
+- Year + copyright
+
+--------------------------------
+FEATURES
+--------------------------------
+
+- Multi-language:
+  - Uzbek (Cyrillic)
+  - Uzbek (Latin)
+  - Russian
+- Dark mode
+- Fully responsive
+
+--------------------------------
+API INTEGRATION
+--------------------------------
+- API.md file
+- Use Axios instance
+- Use React Query
+- Handle loading & errors
+- Use JWT if available
+
+--------------------------------
+OUTPUT
+--------------------------------
+
+- Full project structure
+- Pages implementation
+- Components
+- API integration
+- Clean scalable code
+
+--------------------------------
+IMPORTANT
+--------------------------------
+
+- Think like senior engineer
+- Focus on UX
+- Avoid beginner mistakes
+- Use reusable components
+- Optimize performance
+Generate this as a Next.js documentation page using Tailwind and shadcn/ui

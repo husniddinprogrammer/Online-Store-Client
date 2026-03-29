@@ -1,0 +1,101 @@
+{
+  "nav": {
+    "catalog": "Katalog",
+    "search": "Qidirish",
+    "cart": "Savat",
+    "favorites": "Sevimlilar",
+    "login": "Kirish",
+    "profile": "Profil",
+    "darkMode": "Tungi rejim",
+    "language": "Til"
+  },
+  "home": {
+    "heroTitle": "Eng yaxshi mahsulotlar bir joyda",
+    "heroSubtitle": "Minglab tovarlar orasidan o'zingizga mosini toping",
+    "categories": "Kategoriyalar",
+    "latestProducts": "Yangi mahsulotlar",
+    "viewAll": "Barchasini ko'rish"
+  },
+  "product": {
+    "addToCart": "Savatga qo'shish",
+    "addedToCart": "Savatga qo'shildi",
+    "inCart": "Savatda",
+    "outOfStock": "Omborda yo'q",
+    "discount": "Chegirma",
+    "rating": "Reyting",
+    "reviews": "sharhlar",
+    "description": "Tasnifi",
+    "similarProducts": "O'xshash mahsulotlar",
+    "addToFavorites": "Sevimlilarга qo'shish",
+    "removeFromFavorites": "Sevimlilardan olib tashlash"
+  },
+  "category": {
+    "filters": "Filtrlar",
+    "priceRange": "Narx diapazoni",
+    "minPrice": "Minimal narx",
+    "maxPrice": "Maksimal narx",
+    "companies": "Kompaniyalar",
+    "apply": "Qo'llash",
+    "sortBy": "Saralash",
+    "popular": "Mashhur",
+    "newest": "Yangi",
+    "byRating": "Reyting bo'yicha",
+    "cheapest": "Arzon",
+    "expensive": "Qimmat",
+    "biggestDiscount": "Katta chegirma",
+    "smallestDiscount": "Kichik chegirma",
+    "noProducts": "Mahsulotlar topilmadi"
+  },
+  "cart": {
+    "title": "Savatdagi mahsulotlar",
+    "empty": "Savat bo'sh",
+    "emptyDesc": "Savatingizga hali hech narsa qo'shilmagan",
+    "continueShopping": "Xarid qilishni davom ettirish",
+    "total": "Jami",
+    "checkout": "Buyurtma berish",
+    "remove": "O'chirish",
+    "quantity": "Miqdor"
+  },
+  "favorites": {
+    "title": "Sevimli mahsulotlar",
+    "empty": "Sevimlilar bo'sh",
+    "emptyDesc": "Siz hali hech qanday mahsulotni sevimlilarga qo'shmagansiz"
+  },
+  "auth": {
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish",
+    "email": "Elektron pochta",
+    "password": "Parol",
+    "name": "Ism",
+    "surname": "Familiya",
+    "phone": "Telefon",
+    "birthday": "Tug'ilgan sana",
+    "confirmPassword": "Parolni tasdiqlash",
+    "forgotPassword": "Parolni unutdingizmi?",
+    "alreadyHaveAccount": "Akkauntingiz bormi?",
+    "dontHaveAccount": "Akkauntingiz yo'qmi?",
+    "loginBtn": "Kirish",
+    "registerBtn": "Ro'yxatdan o'tish",
+    "resetPassword": "Parolni tiklash",
+    "backToLogin": "Kirishga qaytish"
+  },
+  "footer": {
+    "support": "Qo'llab-quvvatlash",
+    "address": "Manzil",
+    "pages": "Sahifalar",
+    "home": "Bosh sahifa",
+    "categories": "Kategoriyalar",
+    "cart": "Savat",
+    "favorites": "Sevimlilar",
+    "followUs": "Bizni kuzatish",
+    "rights": "Barcha huquqlar himoyalangan"
+  },
+  "common": {
+    "loading": "Yuklanmoqda...",
+    "error": "Xato yuz berdi",
+    "retry": "Qayta urinish",
+    "close": "Yopish",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish"
+  }
+}
