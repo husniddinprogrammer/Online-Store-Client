@@ -40,7 +40,7 @@ export function ProductGrid({ products, loading, error, lang, dictionary }: Prod
             <ProductSkeleton key={index} />
           ))
         : products.map((product) => (
-            <ProductCard key={product.id} product={product} lang={lang || 'en'} dictionary={dictionary} />
+            <ProductCard key={product.id} product={product} lang={lang || 'uz-cyrl'} dictionary={dictionary} />
           ))}
     </div>
   )

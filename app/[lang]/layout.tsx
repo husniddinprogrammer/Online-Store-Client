@@ -3,6 +3,7 @@ import { getDictionary, hasLocale, locales, type Locale } from '@/lib/i18n'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import { QueryProvider } from '@/components/providers/QueryProvider'
 import { AuthInitializer } from '@/components/providers/AuthInitializer'
+import { Toaster } from '@/components/ui/Toaster'
 
 export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }))
@@ -29,6 +30,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
         <div className="min-h-screen flex flex-col bg-white dark:bg-gray-950">
           {children}
         </div>
+        <Toaster />
       </QueryProvider>
     </ThemeProvider>
   )

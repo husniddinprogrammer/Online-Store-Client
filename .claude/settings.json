@@ -4,7 +4,8 @@
       "Bash(npx next:*)",
       "Bash(npm run:*)",
       "Bash(cat /c/Users/User/Desktop/online-store-client-page/online-store-client/app/[lang]/page.tsx)",
-      "Bash(cat /c/Users/User/Desktop/online-store-client-page/online-store-client/app/[lang]/product/[id]/page.tsx)"
+      "Bash(cat /c/Users/User/Desktop/online-store-client-page/online-store-client/app/[lang]/product/[id]/page.tsx)",
+      "Bash(*)"
     ]
   }
 }

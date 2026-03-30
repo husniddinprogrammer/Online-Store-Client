@@ -1,0 +1,183 @@
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import {
+  users,
+  addresses,
+  orders as ordersApi,
+  notifications as notificationsApi,
+} from '@/lib/api/endpoints'
+import { useAuthStore } from '@/lib/store/authStore'
+
+// ── User ──────────────────────────────────────────────────────────────────────
+
+export function useMe() {
+  const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  return useQuery({
+    queryKey: ['me'],
+    queryFn: () => users.getMe().then((r) => r.data.data),
+    enabled: isLoggedIn,
+  })
+}
+
+export function useUpdateMe() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (payload: {
+      name: string
+      surname: string
+      phoneNumber?: string
+      birthdayAt?: string
+    }) => users.updateMe(payload).then((r) => r.data.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['me'] })
+    },
+  })
+}
+
+export function useChangePassword() {
+  return useMutation({
+    mutationFn: (payload: { oldPassword: string; newPassword: string }) =>
+      users.changePassword(payload).then((r) => r.data),
+  })
+}
+
+// ── Addresses ─────────────────────────────────────────────────────────────────
+
+export function useAddresses() {
+  const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  return useQuery({
+    queryKey: ['addresses'],
+    queryFn: () => addresses.getAddresses().then((r) => r.data.data),
+    enabled: isLoggedIn,
+  })
+}
+
+export function useCreateAddress() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (payload: {
+      regionType: string
+      cityType: string
+      homeNumber: string
+      roomNumber: string
+    }) => addresses.createAddress(payload).then((r) => r.data.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['addresses'] })
+    },
+  })
+}
+
+export function useUpdateAddress() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      id,
+      payload,
+    }: {
+      id: number
+      payload: {
+        regionType: string
+        cityType: string
+        homeNumber: string
+        roomNumber: string
+      }
+    }) => addresses.updateAddress(id, payload).then((r) => r.data.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['addresses'] })
+    },
+  })
+}
+
+export function useDeleteAddress() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id: number) =>
+      addresses.deleteAddress(id).then((r) => r.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['addresses'] })
+    },
+  })
+}
+
+// ── Orders ────────────────────────────────────────────────────────────────────
+
+export function useMyOrders(params?: {
+  status?: string
+  page?: number
+  size?: number
+}) {
+  const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  return useQuery({
+    queryKey: ['myOrders', params],
+    queryFn: () => ordersApi.getMyOrders(params).then((r) => r.data.data),
+    enabled: isLoggedIn,
+  })
+}
+
+export function useCancelOrder() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id: number) =>
+      ordersApi.cancelOrder(id).then((r) => r.data.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myOrders'] })
+    },
+  })
+}
+
+// ── Notifications ─────────────────────────────────────────────────────────────
+
+export function useNotifications(params?: { page?: number; size?: number }) {
+  const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  return useQuery({
+    queryKey: ['notifications', params],
+    queryFn: () =>
+      notificationsApi.getNotifications(params).then((r) => r.data.data),
+    enabled: isLoggedIn,
+  })
+}
+
+export function useUnseenCount() {
+  const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  return useQuery({
+    queryKey: ['unseenCount'],
+    queryFn: () =>
+      notificationsApi.getUnseenCount().then((r) => r.data.data),
+    enabled: isLoggedIn,
+    refetchInterval: 30_000,
+  })
+}
+
+export function useMarkSeen() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id: number) =>
+      notificationsApi.markSeen(id).then((r) => r.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['notifications'] })
+      queryClient.invalidateQueries({ queryKey: ['unseenCount'] })
+    },
+  })
+}
+
+export function useMarkAllSeen() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: () => notificationsApi.markAllSeen().then((r) => r.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['notifications'] })
+      queryClient.invalidateQueries({ queryKey: ['unseenCount'] })
+    },
+  })
+}
+
+export function useDeleteNotification() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id: number) =>
+      notificationsApi.deleteNotification(id).then((r) => r.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['notifications'] })
+      queryClient.invalidateQueries({ queryKey: ['unseenCount'] })
+    },
+  })
+}

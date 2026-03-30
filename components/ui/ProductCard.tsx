@@ -91,7 +91,7 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
     >
       {/* Image area */}
       <div className="relative" style={{ aspectRatio: '1/1' }}>
-        <Link href={`/${lang}/product/${product.id}`}>
+        <Link href={`/${lang}/product/${product.id}`} className="absolute inset-0">
           {mainImage ? (
             <Image
               src={mainImage}

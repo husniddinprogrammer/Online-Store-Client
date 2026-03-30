@@ -10,6 +10,10 @@ import type {
   CartItemResponse,
   CommentResponse,
   PosterResponse,
+  UserResponse,
+  AddressResponse,
+  OrderResponse,
+  NotificationResponse,
 } from './types'
 
 // ──────────────────────────────────────────────
@@ -194,4 +198,62 @@ export const companies = {
       '/api/companies',
       { params }
     ),
+}
+
+// ──────────────────────────────────────────────
+// User profile
+// ──────────────────────────────────────────────
+
+export const users = {
+  getMe: () =>
+    axiosInstance.get<ApiResponse<UserResponse>>('/api/users/me'),
+  updateMe: (payload: { name: string; surname: string; phoneNumber?: string; birthdayAt?: string }) =>
+    axiosInstance.put<ApiResponse<UserResponse>>('/api/users/me', payload),
+  changePassword: (payload: { oldPassword: string; newPassword: string }) =>
+    axiosInstance.put<ApiResponse<null>>('/api/users/me/change-password', payload),
+}
+
+// ──────────────────────────────────────────────
+// Addresses
+// ──────────────────────────────────────────────
+
+export const addresses = {
+  getAddresses: () =>
+    axiosInstance.get<ApiResponse<AddressResponse[]>>('/api/addresses'),
+  createAddress: (payload: { regionType: string; cityType: string; homeNumber: string; roomNumber: string }) =>
+    axiosInstance.post<ApiResponse<AddressResponse>>('/api/addresses', payload),
+  updateAddress: (id: number, payload: { regionType: string; cityType: string; homeNumber: string; roomNumber: string }) =>
+    axiosInstance.put<ApiResponse<AddressResponse>>(`/api/addresses/${id}`, payload),
+  deleteAddress: (id: number) =>
+    axiosInstance.delete<ApiResponse<null>>(`/api/addresses/${id}`),
+}
+
+// ──────────────────────────────────────────────
+// Orders
+// ──────────────────────────────────────────────
+
+export const orders = {
+  getMyOrders: (params?: { status?: string; page?: number; size?: number }) =>
+    axiosInstance.get<ApiResponse<PaginatedData<OrderResponse>>>('/api/orders/my', { params }),
+  getMyOrder: (id: number) =>
+    axiosInstance.get<ApiResponse<OrderResponse>>(`/api/orders/my/${id}`),
+  cancelOrder: (id: number) =>
+    axiosInstance.patch<ApiResponse<OrderResponse>>(`/api/orders/my/${id}/cancel`),
+}
+
+// ──────────────────────────────────────────────
+// Notifications
+// ──────────────────────────────────────────────
+
+export const notifications = {
+  getNotifications: (params?: { page?: number; size?: number }) =>
+    axiosInstance.get<ApiResponse<PaginatedData<NotificationResponse>>>('/api/notifications', { params }),
+  getUnseenCount: () =>
+    axiosInstance.get<ApiResponse<number>>('/api/notifications/unseen-count'),
+  markSeen: (id: number) =>
+    axiosInstance.patch<ApiResponse<null>>(`/api/notifications/${id}/seen`),
+  markAllSeen: () =>
+    axiosInstance.patch<ApiResponse<null>>('/api/notifications/seen-all'),
+  deleteNotification: (id: number) =>
+    axiosInstance.delete<ApiResponse<null>>(`/api/notifications/${id}`),
 }
