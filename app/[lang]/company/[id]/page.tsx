@@ -11,24 +11,24 @@ import { SortSelect } from '@/components/ui/SortSelect'
 import { useProducts } from '@/lib/hooks/useProducts'
 import { getDictionary, type Locale, type Dictionary } from '@/lib/i18n'
 
-interface CategoryPageProps {
+interface CompanyPageProps {
   params: Promise<{ lang: string; id: string }>
 }
 
 // Inner component using useSearchParams — wrapped in Suspense by parent
-function CategoryContent({ lang, id, dict }: { lang: string; id: string; dict: Dictionary }) {
+function CompanyContent({ lang, id, dict }: { lang: string; id: string; dict: Dictionary }) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
   const page = parseInt(searchParams.get('page') ?? '0', 10)
   const sort = searchParams.get('sort') ?? 'NEWEST'
 
-  const categoryId = id !== 'all' ? parseInt(id, 10) : undefined
+  const companyId = parseInt(id, 10)
 
   const { data: productsData, isLoading, error } = useProducts({
     page,
     size: 20,
-    categoryId,
+    companyId,
     sort,
   })
 
@@ -42,7 +42,7 @@ function CategoryContent({ lang, id, dict }: { lang: string; id: string; dict: D
       }
     })
     current.set('page', '0')
-    router.push(`/${lang}/category/${id}?${current.toString()}`)
+    router.push(`/${lang}/company/${id}?${current.toString()}`)
   }
 
   const handleSort = (value: string) => {
@@ -52,7 +52,7 @@ function CategoryContent({ lang, id, dict }: { lang: string; id: string; dict: D
   const handlePageChange = (newPage: number) => {
     const current = new URLSearchParams(searchParams.toString())
     current.set('page', String(newPage))
-    router.push(`/${lang}/category/${id}?${current.toString()}`)
+    router.push(`/${lang}/company/${id}?${current.toString()}`)
   }
 
   const products = productsData?.content ?? []
@@ -63,7 +63,7 @@ function CategoryContent({ lang, id, dict }: { lang: string; id: string; dict: D
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          {categoryId ? `Category ${id}` : dict.home.latestProducts}
+          {dict.home.categories} {id}
         </h1>
         <p className="text-gray-600">
           {productsData?.totalElements
@@ -103,7 +103,7 @@ function CategoryContent({ lang, id, dict }: { lang: string; id: string; dict: D
   )
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
+export default function CompanyPage({ params }: CompanyPageProps) {
   const { lang, id } = use(params)
   const [dict, setDict] = useState<Dictionary | null>(null)
 
@@ -129,7 +129,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           </div>
         }
       >
-        <CategoryContent lang={lang} id={id} dict={dict} />
+        <CompanyContent lang={lang} id={id} dict={dict} />
       </Suspense>
       <Footer lang={lang} dictionary={dict} />
       <FooterBottom dictionary={dict} />

@@ -1,0 +1,102 @@
+{
+  "nav": {
+    "catalog": "Catalog",
+    "search": "Search",
+    "cart": "Cart",
+    "favorites": "Favorites",
+    "login": "Login",
+    "profile": "Profile",
+    "darkMode": "Dark Mode",
+    "language": "Language"
+  },
+  "home": {
+    "heroTitle": "Best products in one place",
+    "heroSubtitle": "Find what suits you among thousands of products",
+    "categories": "Categories",
+    "latestProducts": "Latest Products",
+    "viewAll": "View All"
+  },
+  "product": {
+    "addToCart": "Add to Cart",
+    "addedToCart": "Added to Cart",
+    "inCart": "In Cart",
+    "outOfStock": "Out of Stock",
+    "discount": "Discount",
+    "rating": "Rating",
+    "reviews": "reviews",
+    "description": "Description",
+    "similarProducts": "Similar Products",
+    "addToFavorites": "Add to Favorites",
+    "removeFromFavorites": "Remove from Favorites"
+  },
+  "category": {
+    "filters": "Filters",
+    "priceRange": "Price Range",
+    "minPrice": "Min Price",
+    "maxPrice": "Max Price",
+    "companies": "Companies",
+    "apply": "Apply",
+    "sortBy": "Sort by",
+    "popular": "Popular",
+    "newest": "Newest",
+    "byRating": "By Rating",
+    "cheapest": "Cheapest",
+    "expensive": "Most Expensive",
+    "biggestDiscount": "Biggest Discount",
+    "smallestDiscount": "Smallest Discount",
+    "noProducts": "No products found"
+  },
+  "cart": {
+    "title": "Products in Cart",
+    "empty": "Cart is empty",
+    "emptyDesc": "You haven't added anything to your cart yet",
+    "continueShopping": "Continue Shopping",
+    "total": "Total",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "quantity": "Quantity"
+  },
+  "favorites": {
+    "title": "Favorite Products",
+    "empty": "Favorites is empty",
+    "emptyDesc": "You haven't added any products to favorites yet"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "name": "First Name",
+    "surname": "Last Name",
+    "phone": "Phone",
+    "birthday": "Birthday",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "loginBtn": "Login",
+    "registerBtn": "Register",
+    "resetPassword": "Reset Password",
+    "backToLogin": "Back to Login"
+  },
+  "footer": {
+    "support": "Support",
+    "address": "Address",
+    "pages": "Pages",
+    "home": "Home",
+    "categories": "Categories",
+    "cart": "Cart",
+    "favorites": "Favorites",
+    "followUs": "Follow Us",
+    "rights": "All rights reserved"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "searchResults": "search results"
+  }
+}

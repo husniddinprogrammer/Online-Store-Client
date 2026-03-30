@@ -202,3 +202,178 @@ IMPORTANT
 - Use reusable components
 - Optimize performance
 Generate this as a Next.js documentation page using Tailwind and shadcn/ui
+
+2-Task
+Role: Senior frontend engineer + UI/UX designer
+
+Task:
+Build a modern user cabinet (account dashboard) frontend
+
+Tech Stack:
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui (components)
+- React Query
+- Axios
+- Zustand
+- React Hook Form + Zod
+- Framer Motion
+
+Design:
+- Modern Material Design
+- Clean and minimal UI
+- Primary color: blue
+- Soft shadows, rounded components
+- Responsive (mobile + desktop)
+- Smooth transitions
+
+--------------------------------
+LAYOUT
+--------------------------------
+
+Structure:
+- Top: Navbar
+- Left: Sidebar (fixed)
+- Right: Main content
+- Bottom: Footer
+
+Sidebar:
+- Personal Data
+- My Orders
+- Favorite Products
+- My Reviews
+- Notifications
+- Logout
+
+Active item highlight
+
+--------------------------------
+PAGES
+--------------------------------
+
+1. PERSONAL DATA PAGE
+
+Main Section:
+- User info form:
+  - name
+  - surname
+  - phone
+- Password change section
+- Address update section
+
+Right side:
+- Balance card
+- Balance top-up button
+
+UI:
+- Card layout
+- Clean forms
+- Input validation
+
+--------------------------------
+
+2. MY ORDERS PAGE
+
+Main Section:
+- Orders table
+
+Columns:
+- Order ID
+- Date
+- Status
+- Total price
+
+Features:
+- Status badge (PENDING, DELIVERED)
+- Pagination
+
+--------------------------------
+
+3. FAVORITE PRODUCTS PAGE
+
+Main Section:
+- Product grid (reuse ProductCard)
+
+Features:
+- Remove from favorites
+- Filters (optional)
+
+--------------------------------
+
+4. MY REVIEWS PAGE
+
+Main Section:
+- List of user reviews
+
+Each item:
+- Product name
+- Rating (stars)
+- Comment text
+- Date
+
+--------------------------------
+
+5. NOTIFICATIONS PAGE
+
+Main Section:
+- List of notifications
+
+Each item:
+- Title
+- Description
+- Time
+- Read/unread state
+
+--------------------------------
+COMPONENTS
+--------------------------------
+
+- Sidebar
+- Layout
+- ProfileForm
+- PasswordForm
+- AddressForm
+- BalanceCard
+- OrdersTable
+- ReviewItem
+- NotificationItem
+- ProductGrid
+
+--------------------------------
+API INTEGRATION
+--------------------------------
+
+- Use Axios instance
+- Use React Query
+- Handle loading & errors
+- JWT authentication
+
+--------------------------------
+UX
+--------------------------------
+
+- Loading skeletons
+- Empty states
+- Toast notifications
+- Smooth transitions
+
+--------------------------------
+OUTPUT
+--------------------------------
+
+- Full project structure
+- Layout (sidebar + navbar)
+- All pages
+- Reusable components
+- Clean scalable code
+
+--------------------------------
+IMPORTANT
+--------------------------------
+
+- Think like senior engineer
+- Avoid duplicated code
+- Use reusable components
+- Follow best practices
+Improve UI to modern material design level

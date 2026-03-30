@@ -21,7 +21,12 @@ export function CategoryCarousel({ categories, lang }: CategoryCarouselProps) {
     })
   }
 
-  if (!categories.length) return null
+  // Filter out categories that have no products
+  const filteredCategories = categories.filter(category => 
+    category.productCount === undefined || category.productCount > 0
+  )
+
+  if (!filteredCategories.length) return null
 
   return (
     <div className="relative group">
@@ -41,7 +46,7 @@ export function CategoryCarousel({ categories, lang }: CategoryCarouselProps) {
         ref={scrollRef}
         className="flex gap-4 overflow-x-auto scrollbar-hide pb-2"
       >
-        {categories.map((cat) => (
+        {filteredCategories.map((cat) => (
           <div key={cat.id} className="flex-none">
             <CategoryCard category={cat} lang={lang} />
           </div>

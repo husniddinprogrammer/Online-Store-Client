@@ -90,7 +90,7 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
       className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col"
     >
       {/* Image area */}
-      <div className="relative" style={{ aspectRatio: '4/3' }}>
+      <div className="relative" style={{ aspectRatio: '1/1' }}>
         <Link href={`/${lang}/product/${product.id}`}>
           {mainImage ? (
             <Image
@@ -118,7 +118,7 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
         <button
           onClick={handleFavorite}
           className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-red-500 dark:hover:text-red-400 transition-colors"
-          aria-label={isFavorite ? dictionary.product.removeFromFavorites : dictionary.product.addToFavorites}
+          aria-label={isFavorite ? dictionary?.product?.removeFromFavorites || 'Remove from Favorites' : dictionary?.product?.addToFavorites || 'Add to Favorites'}
         >
           <HeartIcon filled={isFavorite} />
         </button>
@@ -133,8 +133,23 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
         </Link>
 
         <StarRating rating={product.averageRating} size="sm" />
-
+        
+        {/* Category & Company */}
+        <div className="flex items-center gap-2 text-xs text-gray-500">
+          {product.category && (
+            <span className="bg-gray-100 px-2 py-1 rounded">
+              {product.category.name}
+            </span>
+          )}
+          {product.company && (
+            <span className="bg-gray-100 px-2 py-1 rounded">
+              {product.company.name}
+            </span>
+          )}
+        </div>
+        
         <div className="flex items-end gap-1.5">
+          
           {product.discountPercent > 0 ? (
             <>
               <span className="text-base font-bold text-blue-600">
@@ -154,20 +169,19 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
         <button
           onClick={handleAddToCart}
           disabled={!inStock}
-          className={`mt-auto flex items-center justify-center gap-2 py-2 px-4 rounded-full text-sm font-medium transition-colors ${
-            !inStock
+          className={`mt-auto flex items-center justify-center gap-2 py-2 px-4 rounded-full text-sm font-medium transition-colors ${!inStock
               ? 'bg-gray-100 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
               : inLocalCart
-              ? 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 border border-green-500'
-              : 'bg-blue-600 hover:bg-blue-700 text-white'
-          }`}
+                ? 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 border border-green-500'
+                : 'bg-blue-600 hover:bg-blue-700 text-white'
+            }`}
         >
           <CartIconSm />
           {!inStock
-            ? dictionary.product.outOfStock
+            ? dictionary?.product?.outOfStock || 'Out of Stock'
             : inLocalCart
-            ? dictionary.product.inCart
-            : dictionary.product.addToCart}
+              ? dictionary?.product?.inCart || 'In Cart'
+              : dictionary?.product?.addToCart || 'Add to Cart'}
         </button>
       </div>
     </motion.div>

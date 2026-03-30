@@ -12,7 +12,7 @@ import { CategoryCarousel } from '@/components/home/CategoryCarousel'
 import { ProductCard } from '@/components/ui/ProductCard'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { ErrorState } from '@/components/ui/ErrorState'
-import { usePosters, useCategories, useProducts } from '@/lib/hooks/useProducts'
+import { usePosters, useCategories, useProducts, useCategoriesWithProducts } from '@/lib/hooks/useProducts'
 import { getDictionary, type Locale } from '@/lib/i18n'
 import { useState, useEffect } from 'react'
 import type { Dictionary } from '@/lib/i18n'
@@ -27,7 +27,7 @@ function HomeContent({ lang, dict }: { lang: string; dict: Dictionary }) {
   const search = searchParams.get('search') ?? undefined
 
   const { data: postersData, isLoading: postersLoading } = usePosters()
-  const { data: categoriesData, isLoading: catsLoading } = useCategories({ size: 20 })
+  const { data: categoriesData, isLoading: catsLoading } = useCategoriesWithProducts({ size: 20 })
   const {
     data: productsData,
     isLoading: productsLoading,
@@ -109,7 +109,7 @@ function HomeContent({ lang, dict }: { lang: string; dict: Dictionary }) {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-            {search ? `"${search}" — qidiruv natijalari` : dict.home.latestProducts}
+            {search ? `"${search}" — ${dict.common.searchResults}` : dict.home.latestProducts}
           </h2>
           {!search && (
             <Link
@@ -141,7 +141,7 @@ function HomeContent({ lang, dict }: { lang: string; dict: Dictionary }) {
             </div>
 
             {/* Product grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
               {latestProducts.map((product) => (
                 <ProductCard
                   key={product.id}

@@ -8,7 +8,7 @@ import { useAuthStore } from '@/lib/store/authStore'
 import { useLocalCartStore } from '@/lib/store/cartStore'
 import { useLocalFavoritesStore } from '@/lib/store/favoritesStore'
 import { useCartQuery } from '@/lib/hooks/useCart'
-import { useCategories } from '@/lib/hooks/useProducts'
+import { useCategoriesWithProducts } from '@/lib/hooks/useProducts'
 import { locales, localeNames } from '@/lib/i18n'
 import type { Locale } from '@/lib/i18n'
 import type { Dictionary } from '@/lib/i18n'
@@ -116,7 +116,7 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
   const localCartItems = useLocalCartStore((s) => s.items)
   const localFavorites = useLocalFavoritesStore((s) => s.productIds)
   const { data: serverCart } = useCartQuery()
-  const { data: categoriesData } = useCategories({ size: 20 })
+  const { data: categoriesData } = useCategoriesWithProducts({ size: 20 })
 
   useEffect(() => setMounted(true), [])
 
@@ -156,6 +156,11 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
   }
 
   const categories = categoriesData?.content ?? []
+  
+  // Filter out categories that have no products
+  const filteredCategories = categories.filter((category: any) => 
+    category.productCount === undefined || category.productCount > 0
+  )
 
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
@@ -189,7 +194,7 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
             {showCatalog && (
               <div className="absolute top-full left-0 mt-2 w-[480px] bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4 z-50">
                 <div className="grid grid-cols-4 gap-3">
-                  {categories.map((cat) => (
+                  {filteredCategories.map((cat: any) => (
                     <Link
                       key={cat.id}
                       href={`/${lang}/category/${cat.id}`}

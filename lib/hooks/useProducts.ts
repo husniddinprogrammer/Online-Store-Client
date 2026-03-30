@@ -25,6 +25,42 @@ export function useCategories(params?: CategoriesParams) {
   })
 }
 
+export function useCategoriesWithProducts(params?: CategoriesParams) {
+  return useQuery({
+    queryKey: ['categories-with-products', params],
+    queryFn: async () => {
+      const categoriesResponse = await categories.getCategories(params)
+      const categoriesData = categoriesResponse.data.data.content
+      
+      // Fetch product count for each category
+      const categoriesWithCounts = await Promise.all(
+        categoriesData.map(async (category) => {
+          try {
+            const productsResponse = await products.getProducts({ categoryId: category.id, size: 1 })
+            const productCount = productsResponse.data.data.totalElements
+            return {
+              ...category,
+              productCount
+            }
+          } catch (error) {
+            console.error(`Error fetching product count for category ${category.id}:`, error)
+            return {
+              ...category,
+              productCount: 0
+            }
+          }
+        })
+      )
+      
+      return {
+        ...categoriesResponse.data.data,
+        content: categoriesWithCounts
+      }
+    },
+    staleTime: 5 * 60 * 1000,
+  })
+}
+
 export function usePosters() {
   return useQuery({
     queryKey: ['posters'],

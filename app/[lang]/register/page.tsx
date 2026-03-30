@@ -24,7 +24,10 @@ const registerSchema = z
     birthday: z.string().optional(),
     password: z
       .string()
-      .min(6, 'Parol kamida 6 ta belgidan iborat bo\'lishi kerak'),
+      .min(6, 'Parol kamida 6 ta belgidan iborat bo\'lishi kerak')
+      .regex(/[A-Z]/, 'Parolda kamida bitta katta harf bo\'lishi kerak')
+      .regex(/[a-z]/, 'Parolda kamida bitta kichik harf bo\'lishi kerak')
+      .regex(/\d/, 'Parolda kamida bitta raqam bo\'lishi kerak'),
     confirmPassword: z.string().min(1, 'Parolni tasdiqlang'),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -40,18 +43,45 @@ export default function RegisterPage({ params }: RegisterPageProps) {
   const setAuth = useAuthStore((s) => s.setAuth)
   const [dict, setDict] = useState<Dictionary | null>(null)
   const [serverError, setServerError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
 
   useEffect(() => {
     getDictionary(lang as Locale).then(setDict)
   }, [lang])
 
+  const validatePassword = (password: string) => {
+    const hasUppercase = /[A-Z]/.test(password)
+    const hasLowercase = /[a-z]/.test(password)
+    const hasDigit = /\d/.test(password)
+    const hasMinLength = password.length >= 6
+    
+    if (!hasMinLength) return 'Parol kamida 6 ta belgidan iborat bo\'lishi kerak'
+    if (!hasUppercase) return 'Parolda kamida bitta katta harf bo\'lishi kerak'
+    if (!hasLowercase) return 'Parolda kamida bitta kichik harf bo\'lishi kerak'
+    if (!hasDigit) return 'Parolda kamida bitta raqam bo\'lishi kerak'
+    
+    return ''
+  }
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    watch,
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
   })
+
+  const passwordValue = watch('password', '')
+
+  useEffect(() => {
+    if (passwordValue) {
+      const error = validatePassword(passwordValue)
+      setPasswordError(error)
+    } else {
+      setPasswordError('')
+    }
+  }, [passwordValue])
 
   const onSubmit = async (data: RegisterFormData) => {
     setServerError('')
@@ -200,12 +230,21 @@ export default function RegisterPage({ params }: RegisterPageProps) {
                 type="password"
                 autoComplete="new-password"
                 {...register('password')}
-                placeholder="••••••••"
-                className={fieldClass(!!errors.password)}
+                placeholder="Parol (kamida 1 katta, 1 kichik harf va 1 raqam)"
+                className={fieldClass(!!errors.password || !!passwordError)}
               />
               {errors.password && (
                 <p className="text-xs text-red-500">{errors.password.message}</p>
               )}
+              {passwordError && !errors.password && (
+                <p className="text-xs text-red-500">{passwordError}</p>
+              )}
+              <p className="text-xs text-gray-500">
+                Parol kamida 6 ta belgidan iborat bo'lishi kerak va quyidagilarni o'z ichiga olishi shart:
+                <br />• Kamida bitta katta harf (A-Z)
+                <br />• Kamida bitta kichik harf (a-z)
+                <br />• Kamida bitta raqam (0-9)
+              </p>
             </div>
 
             {/* Confirm Password */}

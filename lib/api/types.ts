@@ -53,6 +53,7 @@ export interface CategoryResponse {
   id: number
   name: string
   imageLink: string | null
+  productCount?: number
 }
 
 // ─── Company ──────────────────────────────────────────────────────────────────
