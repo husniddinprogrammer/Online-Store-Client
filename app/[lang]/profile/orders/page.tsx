@@ -55,6 +55,7 @@ function EmptyOrders({ dict }: { dict: Dictionary }) {
 export default function OrdersPage({ params }: PageProps) {
   const { lang } = use(params)
   const [dict, setDict] = useState<Dictionary | null>(null)
+  const [isAuthInitialized, setIsAuthInitialized] = useState(false)
 
   useEffect(() => {
     getDictionary(lang as Locale).then(setDict)
@@ -62,7 +63,13 @@ export default function OrdersPage({ params }: PageProps) {
 
   const router = useRouter()
   const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  const initialize = useAuthStore((s) => s.initialize)
   const addToast = useToastStore((s) => s.addToast)
+
+  useEffect(() => {
+    initialize()
+    setIsAuthInitialized(true)
+  }, [initialize])
 
   const [activeStatus, setActiveStatus] = useState<StatusTab>('ALL')
   const [page, setPage] = useState(0)
@@ -75,8 +82,10 @@ export default function OrdersPage({ params }: PageProps) {
   const cancelOrder = useCancelOrder()
 
   useEffect(() => {
-    if (!isLoggedIn) router.replace(`/${lang}/login`)
-  }, [isLoggedIn, lang, router])
+    if (isAuthInitialized && !isLoggedIn) {
+      router.replace(`/${lang}/login`)
+    }
+  }, [isLoggedIn, lang, router, isAuthInitialized])
 
   if (!dict) return null
 

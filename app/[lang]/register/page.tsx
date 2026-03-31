@@ -95,7 +95,7 @@ export default function RegisterPage({ params }: RegisterPageProps) {
         birthdayAt: data.birthday,
       })
       setAuth(response.data.data)
-      router.push(`/${lang}`)
+      router.push(`/${lang}/profile`)
     } catch (err: unknown) {
       const message =
         (err as { response?: { data?: { message?: string } } })?.response?.data

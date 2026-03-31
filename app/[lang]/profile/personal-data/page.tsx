@@ -117,6 +117,7 @@ interface PasswordFields {
 export default function PersonalDataPage({ params }: PageProps) {
   const { lang } = use(params)
   const [dict, setDict] = useState<Dictionary | null>(null)
+  const [isAuthInitialized, setIsAuthInitialized] = useState(false)
 
   useEffect(() => {
     getDictionary(lang as Locale).then(setDict)
@@ -124,8 +125,8 @@ export default function PersonalDataPage({ params }: PageProps) {
 
   const router = useRouter()
   const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  const initialize = useAuthStore((s) => s.initialize)
   const addToast = useToastStore((s) => s.addToast)
-
   const { data: me, isLoading: meLoading } = useMe()
   const { data: addressList, isLoading: addrLoading } = useAddresses()
   const updateMe = useUpdateMe()
@@ -133,6 +134,18 @@ export default function PersonalDataPage({ params }: PageProps) {
   const createAddress = useCreateAddress()
   const updateAddress = useUpdateAddress()
   const deleteAddress = useDeleteAddress()
+
+  useEffect(() => {
+    initialize()
+    setIsAuthInitialized(true)
+  }, [initialize])
+
+  // Redirect if not logged in (after mount)
+  useEffect(() => {
+    if (isAuthInitialized && !isLoggedIn) {
+      router.replace(`/${lang}/login`)
+    }
+  }, [isLoggedIn, lang, router, isAuthInitialized])
 
   const [editingAddressId, setEditingAddressId] = useState<number | null>(null)
   const [showAddAddress, setShowAddAddress] = useState(false)

@@ -107,7 +107,10 @@ export function ProfileSidebar({ lang, dict }: ProfileSidebarProps) {
 
   const handleLogout = () => {
     logout()
-    router.push(`/${lang}`)
+    // Force redirect to home page after a small delay
+    setTimeout(() => {
+      router.push(`/${lang}`)
+    }, 100)
   }
 
   const items = navItems(lang, dict)

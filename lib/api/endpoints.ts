@@ -34,6 +34,10 @@ export interface RegisterPayload {
   birthdayAt?: string
 }
 
+export interface ForgotPasswordPayload {
+  email: string
+}
+
 export const auth = {
   login: (payload: LoginPayload) =>
     axiosInstance.post<ApiResponse<AuthResponse>>('/api/auth/login', payload),
@@ -47,6 +51,9 @@ export const auth = {
     axiosInstance.post<ApiResponse<AuthResponse>>('/api/auth/refresh-token', {
       refreshToken,
     }),
+
+  forgotPassword: (payload: ForgotPasswordPayload) =>
+    axiosInstance.post<ApiResponse<null>>('/api/auth/forgot-password', payload),
 }
 
 // ──────────────────────────────────────────────

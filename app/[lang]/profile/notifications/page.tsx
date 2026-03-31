@@ -110,6 +110,7 @@ function NotificationSkeleton() {
 export default function NotificationsPage({ params }: PageProps) {
   const { lang } = use(params)
   const [dict, setDict] = useState<Dictionary | null>(null)
+  const [isAuthInitialized, setIsAuthInitialized] = useState(false)
 
   useEffect(() => {
     getDictionary(lang as Locale).then(setDict)
@@ -117,7 +118,13 @@ export default function NotificationsPage({ params }: PageProps) {
 
   const router = useRouter()
   const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  const initialize = useAuthStore((s) => s.initialize)
   const addToast = useToastStore((s) => s.addToast)
+
+  useEffect(() => {
+    initialize()
+    setIsAuthInitialized(true)
+  }, [initialize])
 
   const [page, setPage] = useState(0)
 
@@ -127,8 +134,10 @@ export default function NotificationsPage({ params }: PageProps) {
   const deleteNotification = useDeleteNotification()
 
   useEffect(() => {
-    if (!isLoggedIn) router.replace(`/${lang}/login`)
-  }, [isLoggedIn, lang, router])
+    if (isAuthInitialized && !isLoggedIn) {
+      router.replace(`/${lang}/login`)
+    }
+  }, [isLoggedIn, lang, router, isAuthInitialized])
 
   if (!dict) return null
 

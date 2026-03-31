@@ -28,6 +28,7 @@ function StarIcon({ filled }: { filled: boolean }) {
 export default function ReviewsPage({ params }: PageProps) {
   const { lang } = use(params)
   const [dict, setDict] = useState<Dictionary | null>(null)
+  const [isAuthInitialized, setIsAuthInitialized] = useState(false)
 
   useEffect(() => {
     getDictionary(lang as Locale).then(setDict)
@@ -35,10 +36,18 @@ export default function ReviewsPage({ params }: PageProps) {
 
   const router = useRouter()
   const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  const initialize = useAuthStore((s) => s.initialize)
 
   useEffect(() => {
-    if (!isLoggedIn) router.replace(`/${lang}/login`)
-  }, [isLoggedIn, lang, router])
+    initialize()
+    setIsAuthInitialized(true)
+  }, [initialize])
+
+  useEffect(() => {
+    if (isAuthInitialized && !isLoggedIn) {
+      router.replace(`/${lang}/login`)
+    }
+  }, [isLoggedIn, lang, router, isAuthInitialized])
 
   if (!dict) return null
 

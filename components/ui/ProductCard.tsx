@@ -150,18 +150,18 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
         
         <div className="flex items-end gap-1.5">
           
-          {product.discountPercent > 0 ? (
+          {product.discountPercent > 0 && product.discountedPrice ? (
             <>
               <span className="text-base font-bold text-blue-600">
                 {product.discountedPrice.toLocaleString()} сум
               </span>
               <span className="text-xs text-gray-400 line-through">
-                {product.sellPrice.toLocaleString()} сум
+                {product.sellPrice?.toLocaleString() ?? '0'} сум
               </span>
             </>
           ) : (
             <span className="text-base font-bold text-gray-800 dark:text-gray-100">
-              {product.sellPrice.toLocaleString()} сум
+              {product.sellPrice?.toLocaleString() ?? '0'} сум
             </span>
           )}
         </div>
