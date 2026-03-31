@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useState, useEffect } from 'react'
+import { use, useState, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/lib/store/authStore'
@@ -16,6 +16,7 @@ import {
 } from '@/lib/hooks/useProfile'
 import { getDictionary, type Locale, type Dictionary } from '@/lib/i18n'
 import type { AddressResponse } from '@/lib/api/types'
+import { BalanceModal } from '@/components/profile/BalanceModal'
 
 interface PageProps {
   params: Promise<{ lang: string }>
@@ -30,6 +31,123 @@ interface AddressFields {
   roomNumber: string
 }
 
+const REGIONS = [
+  { value: 'TASHKENT_CITY',   label: 'Toshkent shahri' },
+  { value: 'TASHKENT_REGION', label: 'Toshkent viloyati' },
+  { value: 'ANDIJAN',         label: 'Andijon viloyati' },
+  { value: 'FERGANA',         label: "Farg'ona viloyati" },
+  { value: 'NAMANGAN',        label: 'Namangan viloyati' },
+  { value: 'SAMARKAND',       label: 'Samarqand viloyati' },
+  { value: 'BUKHARA',         label: 'Buxoro viloyati' },
+  { value: 'NAVOI',           label: 'Navoiy viloyati' },
+  { value: 'KASHKADARYA',     label: 'Qashqadaryo viloyati' },
+  { value: 'SURKHANDARYA',    label: 'Surxondaryo viloyati' },
+  { value: 'JIZZAKH',         label: 'Jizzax viloyati' },
+  { value: 'SIRDARYA',        label: 'Sirdaryo viloyati' },
+  { value: 'KHOREZM',         label: 'Xorazm viloyati' },
+  { value: 'KARAKALPAKSTAN',  label: "Qoraqalpog'iston Respublikasi" },
+]
+
+const REGION_CITIES: Record<string, { value: string; label: string }[]> = {
+  TASHKENT_CITY: [
+    { value: 'TASHKENT', label: 'Toshkent' },
+  ],
+  TASHKENT_REGION: [
+    { value: 'CHIRCHIQ',   label: 'Chirchiq' },
+    { value: 'ANGREN',     label: 'Angren' },
+    { value: 'ALMALYK',    label: 'Olmaliq' },
+    { value: 'BEKABAD',    label: 'Bekobod' },
+    { value: 'YANGIYO_L',  label: "Yangiyo'l" },
+    { value: 'NURAFSHON',  label: 'Nurafshon' },
+  ],
+  ANDIJAN: [
+    { value: 'ANDIJAN',   label: 'Andijon' },
+    { value: 'ASAKA',     label: 'Asaka' },
+    { value: 'SHAHRIXON', label: 'Shahrixon' },
+    { value: 'XONOBOD',   label: 'Xonobod' },
+    { value: 'PAP',       label: 'Pap' },
+  ],
+  FERGANA: [
+    { value: 'FERGANA',  label: "Farg'ona" },
+    { value: 'MARGILAN', label: "Marg'ilon" },
+    { value: 'QOQON',    label: "Qo'qon" },
+    { value: 'QUVA',     label: 'Quva' },
+    { value: 'RISHTON',  label: 'Rishton' },
+  ],
+  NAMANGAN: [
+    { value: 'NAMANGAN',     label: 'Namangan' },
+    { value: 'CHUST',        label: 'Chust' },
+    { value: 'TO_RAQO_RG_ON', label: "To'raqo'rg'on" },
+    { value: 'POP',          label: 'Pop' },
+    { value: 'KOSONSOY',     label: 'Kosonsoy' },
+  ],
+  SAMARKAND: [
+    { value: 'SAMARKAND',     label: 'Samarqand' },
+    { value: 'KATTAQO_RG_ON', label: "Kattaqo'rg'on" },
+    { value: 'URGUT',         label: 'Urgut' },
+    { value: 'ISHTIXON',      label: 'Ishtixon' },
+    { value: 'PASTDARG_OM',   label: "Pastdarg'om" },
+  ],
+  BUKHARA: [
+    { value: 'BUKHARA',        label: 'Buxoro' },
+    { value: 'KOGON',          label: 'Kogon' },
+    { value: 'KAGAN',          label: 'Kagan' },
+    { value: 'QOROVULBOZOR',   label: 'Qorovulbozor' },
+    { value: 'GAZLI',          label: 'Gazli' },
+  ],
+  NAVOI: [
+    { value: 'NAVOI',     label: 'Navoiy' },
+    { value: 'ZARAFSHON', label: 'Zarafshon' },
+    { value: 'KARMANA',   label: 'Karmana' },
+    { value: 'NUROTA',    label: 'Nurota' },
+    { value: 'UCHQUDUQ',  label: 'Uchquduq' },
+  ],
+  KASHKADARYA: [
+    { value: 'KARSHI',     label: 'Qarshi' },
+    { value: 'SHAHRISABZ', label: 'Shahrisabz' },
+    { value: 'MUBORAK',    label: 'Muborak' },
+    { value: 'G_UZOR',     label: "G'uzor" },
+    { value: 'KITOB',      label: 'Kitob' },
+  ],
+  SURKHANDARYA: [
+    { value: 'TERMEZ',      label: 'Termiz' },
+    { value: 'DENOV',       label: 'Denov' },
+    { value: 'BOYSUN',      label: 'Boysun' },
+    { value: 'SARIOSIYO',   label: 'Sariosiyo' },
+    { value: 'QUMQO_RG_ON', label: "Qumqo'rg'on" },
+  ],
+  JIZZAKH: [
+    { value: 'JIZZAKH',     label: 'Jizzax' },
+    { value: 'DO_STLIK',    label: "Do'stlik" },
+    { value: 'GAGARIN',     label: 'Gagarin' },
+    { value: 'PAXTAKOR',    label: 'Paxtakor' },
+    { value: 'ZO_FAROBIOD', label: 'Zofarobod' },
+  ],
+  SIRDARYA: [
+    { value: 'GULISTON', label: 'Guliston' },
+    { value: 'YANGIYER', label: 'Yangiyer' },
+    { value: 'SIRDARYO', label: 'Sirdaryo' },
+    { value: 'BOYOVUT',  label: 'Boyovut' },
+    { value: 'SHIRIN',   label: 'Shirin' },
+  ],
+  KHOREZM: [
+    { value: 'URGENCH',    label: 'Urganch' },
+    { value: 'XIVA',       label: 'Xiva' },
+    { value: 'PITNAK',     label: 'Pitnak' },
+    { value: 'GURLAN',     label: 'Gurlan' },
+    { value: 'YANGIBOZOR', label: 'Yangibozor' },
+  ],
+  KARAKALPAKSTAN: [
+    { value: 'NUKUS',     label: 'Nukus' },
+    { value: 'MOYNAQ',    label: "Mo'ynaq" },
+    { value: 'CHIMBOY',   label: 'Chimboy' },
+    { value: 'XO_JAYLI',  label: "Xo'jayli" },
+    { value: 'QONLIKO_L', label: "Qonliko'l" },
+  ],
+}
+
+const selectCls = 'w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm'
+
 function AddressForm({
   initial,
   dict,
@@ -43,40 +161,66 @@ function AddressForm({
   onCancel: () => void
   isPending: boolean
 }) {
-  const { register, handleSubmit } = useForm<AddressFields>({
+  const { register, handleSubmit, watch, setValue } = useForm<AddressFields>({
     defaultValues: initial ?? { regionType: '', cityType: '', homeNumber: '', roomNumber: '' },
   })
 
+  const selectedRegion = watch('regionType')
+  const availableCities = REGION_CITIES[selectedRegion] ?? []
+
+  // Reset city when region changes (skip on initial render)
+  const isFirstRender = useRef(true)
+  useEffect(() => {
+    if (isFirstRender.current) { isFirstRender.current = false; return }
+    setValue('cityType', '')
+  }, [selectedRegion, setValue])
+
   return (
     <form onSubmit={handleSubmit(onSave)} className="grid grid-cols-2 gap-3 mt-3">
+      {/* Region */}
       <div className="flex flex-col gap-1">
         <label className="text-xs font-medium text-gray-600 dark:text-gray-400">{dict.profile.region}</label>
-        <input
-          {...register('regionType', { required: true })}
-          className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-        />
+        <select {...register('regionType', { required: true })} className={selectCls}>
+          <option value="">— Viloyat —</option>
+          {REGIONS.map((r) => (
+            <option key={r.value} value={r.value}>{r.label}</option>
+          ))}
+        </select>
       </div>
+
+      {/* City */}
       <div className="flex flex-col gap-1">
         <label className="text-xs font-medium text-gray-600 dark:text-gray-400">{dict.profile.city}</label>
-        <input
+        <select
           {...register('cityType', { required: true })}
-          className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-        />
+          disabled={!selectedRegion}
+          className={`${selectCls} disabled:opacity-50 disabled:cursor-not-allowed`}
+        >
+          <option value="">— Shahar —</option>
+          {availableCities.map((c) => (
+            <option key={c.value} value={c.value}>{c.label}</option>
+          ))}
+        </select>
       </div>
+
+      {/* Home number */}
       <div className="flex flex-col gap-1">
         <label className="text-xs font-medium text-gray-600 dark:text-gray-400">{dict.profile.homeNumber}</label>
         <input
           {...register('homeNumber', { required: true })}
-          className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+          className={selectCls}
         />
       </div>
+
+      {/* Room number */}
       <div className="flex flex-col gap-1">
         <label className="text-xs font-medium text-gray-600 dark:text-gray-400">{dict.profile.roomNumber}</label>
         <input
           {...register('roomNumber', { required: true })}
-          className="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+          className={selectCls}
         />
       </div>
+
       <div className="col-span-2 flex gap-2 justify-end mt-1">
         <button
           type="button"
@@ -149,6 +293,7 @@ export default function PersonalDataPage({ params }: PageProps) {
 
   const [editingAddressId, setEditingAddressId] = useState<number | null>(null)
   const [showAddAddress, setShowAddAddress] = useState(false)
+  const [showTopUp, setShowTopUp] = useState(false)
 
   const profileForm = useForm<ProfileFields>()
   const passwordForm = useForm<PasswordFields>()
@@ -500,7 +645,7 @@ export default function PersonalDataPage({ params }: PageProps) {
               : `${(me?.balance ?? 0).toLocaleString()} сум`}
           </p>
           <button
-            onClick={() => addToast('Coming soon', 'info')}
+            onClick={() => setShowTopUp(true)}
             className="w-full py-2.5 bg-white/20 hover:bg-white/30 text-white rounded-xl font-medium text-sm transition-colors backdrop-blur-sm border border-white/30"
           >
             {dict.profile.topUp}
@@ -554,6 +699,12 @@ export default function PersonalDataPage({ params }: PageProps) {
           )}
         </div>
       </div>
+
+      <BalanceModal
+        open={showTopUp}
+        onClose={() => setShowTopUp(false)}
+        currentBalance={me?.balance ?? 0}
+      />
     </div>
   )
 }

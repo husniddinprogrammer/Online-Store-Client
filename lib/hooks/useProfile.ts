@@ -15,6 +15,7 @@ export function useMe() {
     queryKey: ['me'],
     queryFn: () => users.getMe().then((r) => r.data.data),
     enabled: isLoggedIn,
+    staleTime: 0,
   })
 }
 
@@ -37,6 +38,16 @@ export function useChangePassword() {
   return useMutation({
     mutationFn: (payload: { oldPassword: string; newPassword: string }) =>
       users.changePassword(payload).then((r) => r.data),
+  })
+}
+
+export function useTopUp() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (amount: number) => users.topUp(amount).then((r) => r.data.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['me'] })
+    },
   })
 }
 
@@ -119,6 +130,19 @@ export function useCancelOrder() {
     mutationFn: (id: number) =>
       ordersApi.cancelOrder(id).then((r) => r.data.data),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myOrders'] })
+    },
+  })
+}
+
+export function useCreateOrder() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (payload: { addressId: number }) =>
+      ordersApi.createOrder(payload).then((r) => r.data.data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] })
+      queryClient.invalidateQueries({ queryKey: ['me'] })
       queryClient.invalidateQueries({ queryKey: ['myOrders'] })
     },
   })

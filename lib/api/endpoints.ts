@@ -218,6 +218,8 @@ export const users = {
     axiosInstance.put<ApiResponse<UserResponse>>('/api/users/me', payload),
   changePassword: (payload: { oldPassword: string; newPassword: string }) =>
     axiosInstance.put<ApiResponse<null>>('/api/users/me/change-password', payload),
+  topUp: (amount: number) =>
+    axiosInstance.post<ApiResponse<UserResponse>>('/api/users/balance/top-up', { amount }),
 }
 
 // ──────────────────────────────────────────────
@@ -246,6 +248,8 @@ export const orders = {
     axiosInstance.get<ApiResponse<OrderResponse>>(`/api/orders/my/${id}`),
   cancelOrder: (id: number) =>
     axiosInstance.patch<ApiResponse<OrderResponse>>(`/api/orders/my/${id}/cancel`),
+  createOrder: (payload: { addressId: number }) =>
+    axiosInstance.post<ApiResponse<OrderResponse>>('/api/orders', payload),
 }
 
 // ──────────────────────────────────────────────

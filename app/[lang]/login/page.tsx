@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useQueryClient } from '@tanstack/react-query'
 import { auth } from '@/lib/api/endpoints'
 import { useAuthStore } from '@/lib/store/authStore'
 import { getDictionary, type Locale, type Dictionary } from '@/lib/i18n'
@@ -25,6 +26,7 @@ type LoginFormData = z.infer<typeof loginSchema>
 export default function LoginPage({ params }: LoginPageProps) {
   const { lang } = use(params)
   const router = useRouter()
+  const queryClient = useQueryClient()
   const setAuth = useAuthStore((s) => s.setAuth)
   const [dict, setDict] = useState<Dictionary | null>(null)
   const [serverError, setServerError] = useState('')
@@ -46,6 +48,7 @@ export default function LoginPage({ params }: LoginPageProps) {
     try {
       const response = await auth.login(data)
       setAuth(response.data.data)
+      queryClient.invalidateQueries({ queryKey: ['me'] })
       router.push(`/${lang}/profile`)
     } catch (err: unknown) {
       const message =

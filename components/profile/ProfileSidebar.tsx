@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
 import { useAuthStore } from '@/lib/store/authStore'
 import { useUnseenCount } from '@/lib/hooks/useProfile'
 import type { Dictionary } from '@/lib/i18n'
@@ -102,12 +103,17 @@ const navItems = (lang: string, dict: Dictionary) => [
 export function ProfileSidebar({ lang, dict }: ProfileSidebarProps) {
   const pathname = usePathname()
   const router = useRouter()
+  const queryClient = useQueryClient()
   const logout = useAuthStore((s) => s.logout)
   const { data: unseenCount } = useUnseenCount()
 
   const handleLogout = () => {
     logout()
-    // Force redirect to home page after a small delay
+    queryClient.removeQueries({ queryKey: ['me'] })
+    queryClient.removeQueries({ queryKey: ['addresses'] })
+    queryClient.removeQueries({ queryKey: ['myOrders'] })
+    queryClient.removeQueries({ queryKey: ['notifications'] })
+    queryClient.removeQueries({ queryKey: ['unseenCount'] })
     setTimeout(() => {
       router.push(`/${lang}`)
     }, 100)

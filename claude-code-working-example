@@ -377,3 +377,110 @@ IMPORTANT
 - Use reusable components
 - Follow best practices
 Improve UI to modern material design level
+
+3-TASK
+Role: Senior frontend engineer
+
+Task:
+Implement balance top-up feature, order payment logic, and fix dark mode issues
+
+Tech Stack:
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- React Query
+- Axios
+- Zustand
+
+--------------------------------
+1. BALANCE TOP-UP FEATURE
+--------------------------------
+
+UI:
+- Add "Top Up Balance" button in cabinet page
+- On click → open modal
+
+Modal:
+- Input field (amount)
+- Min: 10,000
+- Max: 10,000,000
+- Validation (number only)
+
+Behavior:
+- On submit:
+  - Call API (e.g. POST /api/users/balance/top-up)
+  - Send amount
+  - Update user balance (refetch or state update)
+  - Show success toast
+  - Close modal
+
+UX:
+- Disable button if invalid input
+- Show loading state
+
+--------------------------------
+2. ORDER PAYMENT LOGIC
+--------------------------------
+
+Context:
+User places order from Cart page
+
+Behavior:
+- When clicking "Buy / Order":
+  - Check user balance
+  - If balance >= total price:
+      → Call order API
+      → Deduct balance
+      → Show success message
+  - If balance < total price:
+      → Show error: "Insufficient balance"
+
+Integration:
+- Use React Query mutation
+- Update UI after order success
+
+--------------------------------
+3. DARK MODE FIX
+--------------------------------
+
+Problem:
+Dark mode is not working correctly inside components
+
+Fix:
+- Ensure Tailwind dark mode is enabled (class strategy)
+- Add "dark" class on root (html/body)
+- Use dark: variants in ALL components
+
+Example:
+- bg-white → dark:bg-gray-900
+- text-black → dark:text-white
+- border → dark:border-gray-700
+
+Also:
+- Fix shadcn/ui components to support dark mode
+- Ensure consistency across pages
+
+--------------------------------
+OUTPUT
+--------------------------------
+
+- BalanceModal component
+- Balance API integration
+- Order logic implementation
+- Cart page update
+- Dark mode fixed components
+- Clean production-ready code
+
+--------------------------------
+IMPORTANT
+--------------------------------
+
+- Think like senior engineer
+- Keep logic clean and reusable
+- Avoid duplicated code
+- Ensure good UX
+Also:
+- Format currency (UZS)
+- Add confirmation dialog before payment
+- Animate modal (Framer Motion)
