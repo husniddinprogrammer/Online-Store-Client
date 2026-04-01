@@ -45,17 +45,14 @@ export function PosterCarousel({ posters }: PosterCarouselProps) {
 
   if (!posters.length) {
     return (
-      <div
-        className="w-full bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl overflow-hidden flex items-center justify-center text-white"
-        style={{ aspectRatio: '16/9' }}
-      >
+      <div className="w-full aspect-[16/9] xl:aspect-auto xl:h-full bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl overflow-hidden flex items-center justify-center text-white">
         <p className="text-xl font-bold">Online Store</p>
       </div>
     )
   }
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-800" style={{ aspectRatio: '16/9' }}>
+    <div className="relative w-full aspect-[16/9] xl:aspect-auto xl:h-full overflow-hidden rounded-2xl bg-gray-100 dark:bg-gray-800">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={current}

@@ -46,6 +46,7 @@ export type Dictionary = {
     heroSubtitle: string
     categories: string
     latestProducts: string
+    bestSellingProducts: string
     viewAll: string
   }
   product: {

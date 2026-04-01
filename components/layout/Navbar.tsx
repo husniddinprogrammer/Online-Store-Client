@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useSyncExternalStore } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
@@ -18,6 +19,13 @@ import type { Dictionary } from '@/lib/i18n'
 interface NavbarProps {
   lang: string
   dictionary: Dictionary
+}
+
+interface CategoryMenuItem {
+  id: number
+  name: string
+  imageLink: string | null
+  productCount?: number
 }
 
 function MoonIcon() {
@@ -104,7 +112,11 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
   const router = useRouter()
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  )
   const [searchQuery, setSearchQuery] = useState('')
   const [showCatalog, setShowCatalog] = useState(false)
   const [showLang, setShowLang] = useState(false)
@@ -120,8 +132,6 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
   const localFavorites = useLocalFavoritesStore((s) => s.productIds)
   const { data: serverCart } = useCartQuery()
   const { data: categoriesData } = useCategoriesWithProducts({ size: 20 })
-
-  useEffect(() => setMounted(true), [])
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -155,10 +165,10 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
     router.push(segments.join('/'))
   }
 
-  const categories = categoriesData?.content ?? []
+  const categories = (categoriesData?.content ?? []) as CategoryMenuItem[]
   
   // Filter out categories that have no products
-  const filteredCategories = categories.filter((category: any) => 
+  const filteredCategories = categories.filter((category) => 
     category.productCount === undefined || category.productCount > 0
   )
 
@@ -194,17 +204,22 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
             {showCatalog && (
               <div className="absolute top-full left-0 mt-2 w-[520px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl shadow-slate-900/10 border border-slate-200/70 dark:border-slate-700/60 p-5 z-50">
                 <div className="grid grid-cols-4 gap-2">
-                  {filteredCategories.map((cat: any) => (
+                  {filteredCategories.map((cat) => (
                     <Link
                       key={cat.id}
                       href={`/${lang}/category/${cat.id}`}
                       onClick={() => setShowCatalog(false)}
                       className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-all duration-150 text-center group"
                     >
-                      <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden ring-1 ring-slate-200 dark:ring-slate-700 group-hover:ring-blue-300 dark:group-hover:ring-blue-700 transition-all">
+                      <div className="relative w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden ring-1 ring-slate-200 dark:ring-slate-700 group-hover:ring-blue-300 dark:group-hover:ring-blue-700 transition-all">
                         {cat.imageLink ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img src={img(cat.imageLink) ?? ''} alt={cat.name} className="w-full h-full object-cover" />
+                          <Image
+                            src={img(cat.imageLink) ?? ''}
+                            alt={cat.name}
+                            fill
+                            sizes="48px"
+                            className="object-cover"
+                          />
                         ) : (
                           <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
