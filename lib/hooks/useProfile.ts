@@ -4,6 +4,8 @@ import {
   addresses,
   orders as ordersApi,
   notifications as notificationsApi,
+  reviews as reviewsApi,
+  comments as commentsApi,
 } from '@/lib/api/endpoints'
 import { useAuthStore } from '@/lib/store/authStore'
 
@@ -144,6 +146,53 @@ export function useCreateOrder() {
       queryClient.invalidateQueries({ queryKey: ['cart'] })
       queryClient.invalidateQueries({ queryKey: ['me'] })
       queryClient.invalidateQueries({ queryKey: ['myOrders'] })
+    },
+  })
+}
+
+// ── Reviews ───────────────────────────────────────────────────────────────────
+
+export function useMyReviews(params?: { page?: number; size?: number }) {
+  const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  return useQuery({
+    queryKey: ['myReviews', params],
+    queryFn: () => reviewsApi.getMyReviews(params).then((r) => r.data.data),
+    enabled: isLoggedIn,
+    staleTime: 0,
+  })
+}
+
+export function usePendingReviews(params?: { page?: number; size?: number }) {
+  const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  return useQuery({
+    queryKey: ['pendingReviews', params],
+    queryFn: () => reviewsApi.getPendingReviews(params).then((r) => r.data.data),
+    enabled: isLoggedIn,
+    staleTime: 0,
+  })
+}
+
+export function useReviewEligibility(productId: number) {
+  const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  return useQuery({
+    queryKey: ['reviewEligibility', productId],
+    queryFn: () => reviewsApi.getEligibility(productId).then((r) => r.data.data),
+    enabled: isLoggedIn && !!productId,
+    staleTime: 0,
+  })
+}
+
+export function useSubmitReview() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (payload: { productId: number; rating: number; text: string }) =>
+      commentsApi.addComment(payload).then((r) => r.data.data),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['myReviews'] })
+      queryClient.invalidateQueries({ queryKey: ['pendingReviews'] })
+      queryClient.invalidateQueries({ queryKey: ['reviewEligibility', variables.productId] })
+      queryClient.invalidateQueries({ queryKey: ['comments', variables.productId] })
+      queryClient.invalidateQueries({ queryKey: ['product', variables.productId] })
     },
   })
 }

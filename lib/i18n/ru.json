@@ -135,12 +135,19 @@
     "cancelOrder": "Отменить заказ",
     "noOrders": "Заказов нет",
     "noReviews": "Отзывов пока нет",
+    "noPendingReviews": "Нет товаров ожидающих отзыва",
     "noNotifications": "Уведомлений нет",
     "markAllRead": "Отметить все как прочитанные",
     "profileUpdated": "Профиль успешно обновлён",
     "passwordChanged": "Пароль успешно изменён",
     "addressSaved": "Адрес сохранён",
     "addressDeleted": "Адрес удалён",
-    "wrongPassword": "Текущий пароль неверен"
+    "wrongPassword": "Текущий пароль неверен",
+    "writeReview": "Написать отзыв",
+    "pendingReviews": "Товары без отзывов",
+    "onlyBuyersReview": "Только покупатели могут оставить отзыв",
+    "reviewSubmitted": "Отзыв успешно оставлен",
+    "yourRating": "Ваша оценка",
+    "yourComment": "Ваш отзыв"
   }
 }

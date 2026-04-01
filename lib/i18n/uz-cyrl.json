@@ -135,12 +135,19 @@
     "cancelOrder": "Бекор қилиш",
     "noOrders": "Буюртмалар йўқ",
     "noReviews": "Шарҳлар ҳали йўқ",
+    "noPendingReviews": "Шарҳ кутаётган маҳсулотлар йўқ",
     "noNotifications": "Билдиришномалар йўқ",
     "markAllRead": "Барчасини ўқилган деб белгилаш",
     "profileUpdated": "Профиль муваффақиятли янгиланди",
     "passwordChanged": "Парол муваффақиятли ўзгартирилди",
     "addressSaved": "Манзил сақланди",
     "addressDeleted": "Манзил ўчирилди",
-    "wrongPassword": "Жорий парол нотўғри"
+    "wrongPassword": "Жорий парол нотўғри",
+    "writeReview": "Шарҳ ёзиш",
+    "pendingReviews": "Шарҳ кутаётган маҳсулотлар",
+    "onlyBuyersReview": "Фақат харидорлар шарҳ қолдира олади",
+    "reviewSubmitted": "Шарҳ муваффақиятли қолдирилди",
+    "yourRating": "Сизнинг баҳоингиз",
+    "yourComment": "Сизнинг шарҳингиз"
   }
 }

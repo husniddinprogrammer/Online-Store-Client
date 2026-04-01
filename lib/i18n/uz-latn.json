@@ -135,12 +135,19 @@
     "cancelOrder": "Bekor qilish",
     "noOrders": "Buyurtmalar yo'q",
     "noReviews": "Sharhlar hali yo'q",
+    "noPendingReviews": "Sharh kutayotgan mahsulotlar yo'q",
     "noNotifications": "Bildirishnomalar yo'q",
     "markAllRead": "Barchasini o'qilgan deb belgilash",
     "profileUpdated": "Profil muvaffaqiyatli yangilandi",
     "passwordChanged": "Parol muvaffaqiyatli o'zgartirildi",
     "addressSaved": "Manzil saqlandi",
     "addressDeleted": "Manzil o'chirildi",
-    "wrongPassword": "Joriy parol noto'g'ri"
+    "wrongPassword": "Joriy parol noto'g'ri",
+    "writeReview": "Sharh yozish",
+    "pendingReviews": "Sharh kutayotgan mahsulotlar",
+    "onlyBuyersReview": "Faqat xaridorlar sharh qoldira oladi",
+    "reviewSubmitted": "Sharh muvaffaqiyatli qoldirildi",
+    "yourRating": "Sizning bahoyingiz",
+    "yourComment": "Sizning sharhinggiz"
   }
 }

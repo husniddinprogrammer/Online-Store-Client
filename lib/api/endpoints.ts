@@ -14,6 +14,7 @@ import type {
   AddressResponse,
   OrderResponse,
   NotificationResponse,
+  ReviewEligibility,
 } from './types'
 
 // ──────────────────────────────────────────────
@@ -250,6 +251,21 @@ export const orders = {
     axiosInstance.patch<ApiResponse<OrderResponse>>(`/api/orders/my/${id}/cancel`),
   createOrder: (payload: { addressId: number }) =>
     axiosInstance.post<ApiResponse<OrderResponse>>('/api/orders', payload),
+}
+
+// ──────────────────────────────────────────────
+// Reviews
+// ──────────────────────────────────────────────
+
+export const reviews = {
+  getMyReviews: (params?: { page?: number; size?: number }) =>
+    axiosInstance.get<ApiResponse<PaginatedData<CommentResponse>>>('/api/reviews/my', { params }),
+
+  getPendingReviews: (params?: { page?: number; size?: number }) =>
+    axiosInstance.get<ApiResponse<PaginatedData<ProductResponse>>>('/api/reviews/pending-review', { params }),
+
+  getEligibility: (productId: number) =>
+    axiosInstance.get<ApiResponse<ReviewEligibility>>(`/api/reviews/eligibility/${productId}`),
 }
 
 // ──────────────────────────────────────────────

@@ -1,13 +1,14 @@
 'use client'
 
 import { use, useState, useEffect } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/lib/store/authStore'
 import { useToastStore } from '@/lib/store/toastStore'
 import { useMyOrders, useCancelOrder } from '@/lib/hooks/useProfile'
 import { Pagination } from '@/components/ui/Pagination'
 import { getDictionary, type Locale, type Dictionary } from '@/lib/i18n'
-import type { OrderResponse } from '@/lib/api/types'
+import type { OrderResponse, OrderItemResponse } from '@/lib/api/types'
 
 interface PageProps {
   params: Promise<{ lang: string }>
@@ -22,6 +23,36 @@ const STATUS_COLORS: Record<string, string> = {
   SHIPPED: 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300',
   DELIVERED: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300',
   CANCELLED: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300',
+}
+
+// ── Order items expanded panel ────────────────────────────────────────────────
+
+function OrderItemsPanel({ items, lang }: { items: OrderItemResponse[]; lang: string }) {
+  return (
+    <div className="bg-gray-50 dark:bg-gray-700/30 border-t border-gray-100 dark:border-gray-700 px-4 py-3 flex flex-col gap-2">
+      {items.map((item) => (
+        <div key={item.id} className="flex items-center gap-3">
+          {/* Name */}
+          <Link
+            href={`/${lang}/product/${item.productId}`}
+            className="flex-1 min-w-0 text-sm text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-1"
+          >
+            {item.productName}
+          </Link>
+
+          {/* Qty × price */}
+          <span className="flex-shrink-0 text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
+            {item.quantity} × {item.price.toLocaleString()} сум
+          </span>
+
+          {/* Item total */}
+          <span className="flex-shrink-0 text-sm font-semibold text-gray-900 dark:text-gray-100 whitespace-nowrap min-w-[90px] text-right">
+            {item.totalPrice.toLocaleString()} сум
+          </span>
+        </div>
+      ))}
+    </div>
+  )
 }
 
 function OrderSkeleton() {
@@ -73,6 +104,10 @@ export default function OrdersPage({ params }: PageProps) {
 
   const [activeStatus, setActiveStatus] = useState<StatusTab>('ALL')
   const [page, setPage] = useState(0)
+  const [expandedId, setExpandedId] = useState<number | null>(null)
+
+  const toggleExpand = (id: number) =>
+    setExpandedId((prev) => (prev === id ? null : id))
 
   const { data, isLoading } = useMyOrders({
     status: activeStatus === 'ALL' ? undefined : activeStatus,
@@ -156,26 +191,112 @@ export default function OrdersPage({ params }: PageProps) {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.map((order: OrderResponse) => (
-                    <tr key={order.id} className="border-b border-gray-50 dark:border-gray-700/50 last:border-0 hover:bg-gray-50/50 dark:hover:bg-gray-700/20 transition-colors">
-                      <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">
-                        #{order.id}
-                      </td>
-                      <td className="px-4 py-3 text-gray-500 dark:text-gray-400">
-                        {new Date(order.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="px-4 py-3">
+                  {orders.map((order: OrderResponse) => {
+                    const isExpanded = expandedId === order.id
+                    const hasItems = (order.items?.length ?? 0) > 0
+                    return (
+                      <>
+                        <tr
+                          key={order.id}
+                          className="border-b border-gray-50 dark:border-gray-700/50 hover:bg-gray-50/50 dark:hover:bg-gray-700/20 transition-colors"
+                        >
+                          <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">
+                            #{order.id}
+                          </td>
+                          <td className="px-4 py-3 text-gray-500 dark:text-gray-400">
+                            {new Date(order.createdAt).toLocaleDateString()}
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${STATUS_COLORS[order.status] ?? ''}`}>
+                              {statusLabel(order.status)}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3">
+                            {hasItems ? (
+                              <button
+                                onClick={() => toggleExpand(order.id)}
+                                className="flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                              >
+                                {order.items.length} ta
+                                <svg
+                                  width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                  stroke="currentColor" strokeWidth="2.5"
+                                  className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                                >
+                                  <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                              </button>
+                            ) : (
+                              <span className="text-sm text-gray-400">—</span>
+                            )}
+                          </td>
+                          <td className="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">
+                            {order.totalAmount.toLocaleString()} сум
+                          </td>
+                          <td className="px-4 py-3 text-right">
+                            {order.status === 'PENDING' && (
+                              <button
+                                onClick={() => handleCancel(order.id)}
+                                disabled={cancelOrder.isPending}
+                                className="px-3 py-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-sm transition-colors disabled:opacity-50"
+                              >
+                                {dict.profile.cancelOrder}
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                        {isExpanded && hasItems && (
+                          <tr key={`${order.id}-items`} className="border-b border-gray-100 dark:border-gray-700">
+                            <td colSpan={6} className="p-0">
+                              <OrderItemsPanel items={order.items} lang={lang} />
+                            </td>
+                          </tr>
+                        )}
+                      </>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile card list */}
+            <div className="md:hidden divide-y divide-gray-100 dark:divide-gray-700">
+              {orders.map((order: OrderResponse) => {
+                const isExpanded = expandedId === order.id
+                const hasItems = (order.items?.length ?? 0) > 0
+                return (
+                  <div key={order.id} className="flex flex-col">
+                    <div className="p-4 flex flex-col gap-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-gray-900 dark:text-gray-100">
+                          #{order.id}
+                        </span>
                         <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${STATUS_COLORS[order.status] ?? ''}`}>
                           {statusLabel(order.status)}
                         </span>
-                      </td>
-                      <td className="px-4 py-3 text-gray-500 dark:text-gray-400">
-                        {order.items?.length ?? 0}
-                      </td>
-                      <td className="px-4 py-3 font-semibold text-gray-900 dark:text-gray-100">
-                        {order.totalAmount.toLocaleString()} сум
-                      </td>
-                      <td className="px-4 py-3 text-right">
+                      </div>
+                      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                        <span>{new Date(order.createdAt).toLocaleDateString()}</span>
+                        {hasItems && (
+                          <button
+                            onClick={() => toggleExpand(order.id)}
+                            className="flex items-center gap-1 text-blue-600 dark:text-blue-400"
+                          >
+                            {order.items.length} ta mahsulot
+                            <svg
+                              width="14" height="14" viewBox="0 0 24 24" fill="none"
+                              stroke="currentColor" strokeWidth="2.5"
+                              className={`transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                            >
+                              <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                          </button>
+                        )}
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-gray-900 dark:text-gray-100">
+                          {order.totalAmount.toLocaleString()} сум
+                        </span>
                         {order.status === 'PENDING' && (
                           <button
                             onClick={() => handleCancel(order.id)}
@@ -185,45 +306,14 @@ export default function OrdersPage({ params }: PageProps) {
                             {dict.profile.cancelOrder}
                           </button>
                         )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Mobile card list */}
-            <div className="md:hidden divide-y divide-gray-100 dark:divide-gray-700">
-              {orders.map((order: OrderResponse) => (
-                <div key={order.id} className="p-4 flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold text-gray-900 dark:text-gray-100">
-                      #{order.id}
-                    </span>
-                    <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${STATUS_COLORS[order.status] ?? ''}`}>
-                      {statusLabel(order.status)}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                    <span>{new Date(order.createdAt).toLocaleDateString()}</span>
-                    <span>{order.items?.length ?? 0} items</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-semibold text-gray-900 dark:text-gray-100">
-                      {order.totalAmount.toLocaleString()} сум
-                    </span>
-                    {order.status === 'PENDING' && (
-                      <button
-                        onClick={() => handleCancel(order.id)}
-                        disabled={cancelOrder.isPending}
-                        className="px-3 py-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-sm transition-colors disabled:opacity-50"
-                      >
-                        {dict.profile.cancelOrder}
-                      </button>
+                      </div>
+                    </div>
+                    {isExpanded && hasItems && (
+                      <OrderItemsPanel items={order.items} lang={lang} />
                     )}
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </>
         )}

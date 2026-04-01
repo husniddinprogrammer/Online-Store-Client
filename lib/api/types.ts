@@ -167,6 +167,29 @@ export interface CommentResponse {
   createdAt: string
 }
 
+// ─── Reviews ──────────────────────────────────────────────────────────────────
+
+export interface ReviewEligibility {
+  productId: number
+  delivered: boolean
+  commented: boolean
+}
+
+export interface ReviewedItem {
+  id: number
+  productId: number
+  productName: string
+  productImageLink: string | null
+  rating: number
+  text: string
+  createdAt: string
+}
+
+export interface MyReviewsResponse {
+  reviewed: ReviewedItem[]
+  notReviewed: ProductResponse[]
+}
+
 // ─── Notification ─────────────────────────────────────────────────────────────
 
 export interface NotificationResponse {

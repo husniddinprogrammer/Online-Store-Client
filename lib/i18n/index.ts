@@ -164,6 +164,7 @@ export type Dictionary = {
     cancelOrder: string
     noOrders: string
     noReviews: string
+    noPendingReviews: string
     noNotifications: string
     markAllRead: string
     profileUpdated: string
@@ -171,5 +172,11 @@ export type Dictionary = {
     addressSaved: string
     addressDeleted: string
     wrongPassword: string
+    writeReview: string
+    pendingReviews: string
+    onlyBuyersReview: string
+    reviewSubmitted: string
+    yourRating: string
+    yourComment: string
   }
 }

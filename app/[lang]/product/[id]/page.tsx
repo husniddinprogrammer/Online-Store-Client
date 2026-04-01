@@ -15,6 +15,7 @@ import { useToggleFavorite } from '@/lib/hooks/useFavorites'
 import { useAuthStore } from '@/lib/store/authStore'
 import { useLocalCartStore } from '@/lib/store/cartStore'
 import { useAddToCart } from '@/lib/hooks/useCart'
+import { useReviewEligibility } from '@/lib/hooks/useProfile'
 import { comments as commentsApi } from '@/lib/api/endpoints'
 import { useQueryClient } from '@tanstack/react-query'
 import { getDictionary, type Locale, type Dictionary } from '@/lib/i18n'
@@ -45,6 +46,8 @@ export default function ProductPage({ params }: ProductPageProps) {
   const [submitting, setSubmitting] = useState(false)
 
   const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
+  const { data: eligibility } = useReviewEligibility(productId)
+  const canReview = (eligibility?.delivered && !eligibility?.commented) ?? false
   const { isFavorite, toggle: toggleFavorite } = useToggleFavorite(productId)
   const localAddItem = useLocalCartStore((s) => s.addItem)
   const addToCartMutation = useAddToCart()
@@ -323,14 +326,14 @@ export default function ProductPage({ params }: ProductPageProps) {
             {dict.product.reviews} ({commentCount})
           </h2>
 
-          {/* Add comment form */}
-          {isLoggedIn && (
+          {/* Add comment form — only for buyers */}
+          {isLoggedIn && canReview && (
             <form
               onSubmit={handleSubmitComment}
               className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5 mb-6 shadow-sm"
             >
               <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-3">
-                Sharh qoldirish
+                {dict.profile.writeReview}
               </h3>
               {/* Star rating input */}
               <div className="flex gap-1 mb-3">
@@ -339,7 +342,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                     key={star}
                     type="button"
                     onClick={() => setCommentRating(star)}
-                    className={`text-2xl ${star <= commentRating ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}
+                    className={`text-2xl transition-transform hover:scale-110 ${star <= commentRating ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'}`}
                   >
                     ★
                   </button>
@@ -348,7 +351,7 @@ export default function ProductPage({ params }: ProductPageProps) {
               <textarea
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
-                placeholder="Mahsulot haqida fikringizni yozing..."
+                placeholder="..."
                 rows={3}
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none text-sm"
               />
@@ -360,6 +363,18 @@ export default function ProductPage({ params }: ProductPageProps) {
                 {submitting ? dict.common.loading : dict.common.save}
               </button>
             </form>
+          )}
+
+          {/* Non-buyer notice */}
+          {isLoggedIn && !canReview && (
+            <div className="flex items-center gap-3 bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-2xl px-5 py-4 mb-6">
+              <svg className="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {dict.profile.onlyBuyersReview}
+              </p>
+            </div>
           )}
 
           {/* Comments list */}
