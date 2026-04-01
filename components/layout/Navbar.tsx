@@ -11,6 +11,7 @@ import { useCartQuery } from '@/lib/hooks/useCart'
 import { useCategoriesWithProducts } from '@/lib/hooks/useProducts'
 import { locales, localeNames } from '@/lib/i18n'
 import { img } from '@/lib/utils/img'
+import { SearchDropdown } from '@/components/ui/SearchDropdown'
 import type { Locale } from '@/lib/i18n'
 import type { Dictionary } from '@/lib/i18n'
 
@@ -108,6 +109,7 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
   const [showCatalog, setShowCatalog] = useState(false)
   const [showLang, setShowLang] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [showSearchDropdown, setShowSearchDropdown] = useState(false)
 
   const catalogRef = useRef<HTMLDivElement>(null)
   const langRef = useRef<HTMLDivElement>(null)
@@ -143,9 +145,6 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    if (searchQuery.trim()) {
-      router.push(`/${lang}?search=${encodeURIComponent(searchQuery.trim())}`)
-    }
   }
 
   const handleLanguageChange = (locale: Locale) => {
@@ -226,7 +225,11 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
               <input
                 type="text"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value)
+                  setShowSearchDropdown(true)
+                }}
+                onFocus={() => setShowSearchDropdown(true)}
                 placeholder={dictionary.nav.search + '...'}
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-400 dark:focus:border-blue-500 transition-all"
               />
@@ -236,6 +239,18 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
                   <line x1="21" y1="21" x2="16.65" y2="16.65" />
                 </svg>
               </button>
+
+              {showSearchDropdown && searchQuery.trim() && (
+                <SearchDropdown
+                  query={searchQuery}
+                  lang={lang}
+                  onSelect={() => {
+                    setShowSearchDropdown(false)
+                    setSearchQuery('')
+                  }}
+                  onClose={() => setShowSearchDropdown(false)}
+                />
+              )}
             </div>
           </form>
 

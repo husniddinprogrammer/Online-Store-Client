@@ -8,7 +8,7 @@ import { StarRating } from './StarRating'
 import { useToggleFavorite } from '@/lib/hooks/useFavorites'
 import { useLocalCartStore } from '@/lib/store/cartStore'
 import { useAuthStore } from '@/lib/store/authStore'
-import { useAddToCart } from '@/lib/hooks/useCart'
+import { useAddToCart, useCartQuery } from '@/lib/hooks/useCart'
 import type { ProductResponse } from '@/lib/api/types'
 import type { Dictionary } from '@/lib/i18n'
 
@@ -62,8 +62,11 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
   const localAddItem = useLocalCartStore((s) => s.addItem)
   const addToCartMutation = useAddToCart()
   const localCart = useLocalCartStore((s) => s.items)
+  const { data: serverCart } = useCartQuery()
 
-  const inLocalCart = localCart.some((i) => i.productId === product.id)
+  const inLocalCart = isLoggedIn
+    ? serverCart?.items.some((i) => i.productId === product.id) ?? false
+    : localCart.some((i) => i.productId === product.id)
   const rawImage = getMainImage(product)
   const mainImage = img(rawImage)
   const inStock = product.stockQuantity > 0
