@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { img } from '@/lib/utils/img'
+import { formatCurrency } from '@/lib/utils/format'
 import { StarRating } from './StarRating'
 import { useToggleFavorite } from '@/lib/hooks/useFavorites'
 import { useLocalCartStore } from '@/lib/store/cartStore'
@@ -103,7 +104,6 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
     >
       <div className="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/70 dark:border-slate-800 overflow-hidden hover:border-blue-200 dark:hover:border-blue-900/60 hover:shadow-xl hover:shadow-slate-900/8 dark:hover:shadow-slate-900/60 transition-all duration-300 flex flex-col flex-1">
 
-        {/* Image */}
         <div className="relative" style={{ aspectRatio: '1/1' }}>
           <Link href={`/${lang}/product/${product.id}`} className="absolute inset-0">
             {mainImage ? (
@@ -126,14 +126,12 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
             )}
           </Link>
 
-          {/* Discount badge */}
           {product.discountPercent > 0 && (
             <div className="absolute top-2.5 left-2.5 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-lg shadow-sm pointer-events-none">
               -{product.discountPercent}%
             </div>
           )}
 
-          {/* Favorite button */}
           <motion.button
             onClick={handleFavorite}
             whileTap={{ scale: 0.85 }}
@@ -148,7 +146,6 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
           </motion.button>
         </div>
 
-        {/* Content */}
         <div className="p-3.5 flex flex-col gap-2.5 flex-1">
           <Link href={`/${lang}/product/${product.id}`}>
             <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100 line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors leading-snug">
@@ -175,15 +172,15 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
             {product.discountPercent > 0 && product.discountedPrice ? (
               <>
                 <span className="text-base font-bold text-blue-600 dark:text-blue-400">
-                  {product.discountedPrice.toLocaleString()} сум
+                  {formatCurrency(product.discountedPrice, lang)}
                 </span>
                 <span className="text-xs text-slate-400 line-through mb-0.5">
-                  {product.sellPrice?.toLocaleString()} сум
+                  {formatCurrency(product.sellPrice ?? 0, lang)}
                 </span>
               </>
             ) : (
               <span className="text-base font-bold text-slate-900 dark:text-slate-100">
-                {product.sellPrice?.toLocaleString() ?? '0'} сум
+                {formatCurrency(product.sellPrice ?? 0, lang)}
               </span>
             )}
           </div>

@@ -1,5 +1,7 @@
 import { ProductResponse } from '@/lib/api/types'
 import { ProductCard } from '@/components/ui/ProductCard'
+import type { Dictionary } from '@/lib/i18n'
+import { defaultLocale } from '@/lib/i18n'
 import { ProductSkeleton } from './ProductSkeleton'
 
 interface ProductGridProps {
@@ -7,7 +9,7 @@ interface ProductGridProps {
   loading?: boolean
   error?: boolean
   lang?: string
-  dictionary?: any
+  dictionary: Dictionary
 }
 
 export function ProductGrid({ products, loading, error, lang, dictionary }: ProductGridProps) {
@@ -40,7 +42,7 @@ export function ProductGrid({ products, loading, error, lang, dictionary }: Prod
             <ProductSkeleton key={index} />
           ))
         : products.map((product) => (
-            <ProductCard key={product.id} product={product} lang={lang || 'uz-cyrl'} dictionary={dictionary} />
+            <ProductCard key={product.id} product={product} lang={lang || defaultLocale} dictionary={dictionary} />
           ))}
     </div>
   )

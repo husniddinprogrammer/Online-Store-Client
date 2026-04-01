@@ -1,4 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios'
+import { defaultLocale } from '@/lib/i18n'
 
 export const BASE_URL = 'http://localhost:8080'
 export const BASE_IMAGE_URL = 'http://localhost:8080'
@@ -120,7 +121,7 @@ function clearAuthAndRedirect() {
 
     // Determine current locale from path
     const pathParts = window.location.pathname.split('/')
-    const locale = pathParts[1] || 'uz-cyrl'
+    const locale = pathParts[1] || defaultLocale
     window.location.href = `/${locale}/login`
   }
 }

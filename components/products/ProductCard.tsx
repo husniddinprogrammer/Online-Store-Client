@@ -9,10 +9,11 @@ import { formatCurrency } from '@/lib/utils/format'
 
 interface ProductCardProps {
   product: ProductResponse
+  lang?: string
 }
 
-export function ProductCard({ product }: ProductCardProps) {
-  const mainImage = product.images.find(i => i.isMain) || product.images[0]
+export function ProductCard({ product, lang }: ProductCardProps) {
+  const mainImage = product.images.find((i) => i.isMain) || product.images[0]
   const hasDiscount = product.discountPercent > 0
   const displayPrice = hasDiscount ? product.discountedPrice : product.sellPrice
   const inStock = product.stockQuantity > 0
@@ -25,7 +26,6 @@ export function ProductCard({ product }: ProductCardProps) {
       <Link href={`/product/${product.id}`} className="group block h-full">
         <div className="h-full bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/70 dark:border-slate-800 overflow-hidden hover:border-blue-200 dark:hover:border-blue-900 hover:shadow-xl hover:shadow-slate-900/8 dark:hover:shadow-slate-900/50 transition-all duration-300 flex flex-col">
 
-          {/* Image */}
           <div className="relative aspect-square overflow-hidden bg-slate-50 dark:bg-slate-800">
             {mainImage ? (
               <>
@@ -36,7 +36,6 @@ export function ProductCard({ product }: ProductCardProps) {
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
                 />
-                {/* Hover overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </>
             ) : (
@@ -47,7 +46,6 @@ export function ProductCard({ product }: ProductCardProps) {
               </div>
             )}
 
-            {/* Badges */}
             <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5">
               {hasDiscount && (
                 <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-lg shadow-sm">
@@ -71,7 +69,6 @@ export function ProductCard({ product }: ProductCardProps) {
             )}
           </div>
 
-          {/* Info */}
           <div className="p-4 flex flex-col flex-1 gap-2">
             <h3 className="font-semibold text-slate-800 dark:text-slate-100 text-sm line-clamp-2 leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
               {product.name}
@@ -93,11 +90,11 @@ export function ProductCard({ product }: ProductCardProps) {
             <div className="mt-auto pt-2 flex items-end justify-between gap-2">
               <div className="flex flex-col">
                 <span className="text-base font-bold text-slate-900 dark:text-white">
-                  {formatCurrency(displayPrice)}
+                  {formatCurrency(displayPrice ?? 0, lang)}
                 </span>
                 {hasDiscount && (
                   <span className="text-xs text-slate-400 line-through">
-                    {formatCurrency(product.sellPrice)}
+                    {formatCurrency(product.sellPrice ?? 0, lang)}
                   </span>
                 )}
               </div>

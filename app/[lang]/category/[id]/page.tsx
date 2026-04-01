@@ -110,6 +110,8 @@ function CategoryContent({ lang, id, dict }: { lang: string; id: string; dict: D
         products={products} 
         loading={isLoading} 
         error={!!error} 
+        lang={lang}
+        dictionary={dict}
       />
 
       {/* Pagination */}

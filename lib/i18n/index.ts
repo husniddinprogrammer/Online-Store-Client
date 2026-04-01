@@ -1,6 +1,6 @@
-export type Locale = 'uz-cyrl' | 'uz-latn' | 'ru'
+export type Locale = 'uz-cyrl' | 'uz-latn' | 'ru' | 'en'
 
-export const locales: Locale[] = ['uz-cyrl', 'uz-latn', 'ru']
+export const locales: Locale[] = ['uz-cyrl', 'uz-latn', 'ru', 'en']
 
 export const defaultLocale: Locale = 'uz-cyrl'
 
@@ -8,6 +8,7 @@ export const localeNames: Record<Locale, string> = {
   'uz-cyrl': 'Ўзбекча',
   'uz-latn': "O'zbekcha",
   'ru': 'Русский',
+  'en': 'English',
 }
 
 export function hasLocale(locale: string): locale is Locale {
@@ -21,6 +22,8 @@ const dictionaries: Record<Locale, () => Promise<unknown>> = {
     import('./uz-latn.json').then((m) => m.default),
   'ru': () =>
     import('./ru.json').then((m) => m.default),
+  'en': () =>
+    import('./en.json').then((m) => m.default),
 }
 
 export async function getDictionary(locale: Locale) {

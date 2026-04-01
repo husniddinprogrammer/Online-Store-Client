@@ -88,6 +88,8 @@ function CompanyContent({ lang, id, dict }: { lang: string; id: string; dict: Di
         products={products} 
         loading={isLoading} 
         error={!!error} 
+        lang={lang}
+        dictionary={dict}
       />
 
       {/* Pagination */}
