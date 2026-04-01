@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
+import { img } from '@/lib/utils/img'
 import { motion, AnimatePresence } from 'framer-motion'
 import { posters as postersApi } from '@/lib/api/endpoints'
 import type { PosterResponse } from '@/lib/api/types'
@@ -68,7 +69,7 @@ export function PosterCarousel({ posters }: PosterCarouselProps) {
           onClick={() => handleClick(posters[current])}
         >
           <Image
-            src={posters[current].imageLink}
+            src={img(posters[current].imageLink) ?? ''}
             alt={`Poster ${posters[current].id}`}
             fill
             className="object-cover"

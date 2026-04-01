@@ -10,6 +10,7 @@ import { useLocalFavoritesStore } from '@/lib/store/favoritesStore'
 import { useCartQuery } from '@/lib/hooks/useCart'
 import { useCategoriesWithProducts } from '@/lib/hooks/useProducts'
 import { locales, localeNames } from '@/lib/i18n'
+import { img } from '@/lib/utils/img'
 import type { Locale } from '@/lib/i18n'
 import type { Dictionary } from '@/lib/i18n'
 
@@ -204,7 +205,7 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
                       <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center overflow-hidden">
                         {cat.imageLink ? (
                           // eslint-disable-next-line @next/next/no-img-element
-                          <img src={cat.imageLink} alt={cat.name} className="w-full h-full object-cover" />
+                          <img src={img(cat.imageLink) ?? ''} alt={cat.name} className="w-full h-full object-cover" />
                         ) : (
                           <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />

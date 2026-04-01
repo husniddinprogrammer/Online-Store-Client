@@ -8,6 +8,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { FooterBottom } from '@/components/layout/FooterBottom'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import { img } from '@/lib/utils/img'
 import { useCartQuery, useRemoveCartItem, useUpdateCartItem } from '@/lib/hooks/useCart'
 import { useLocalCartStore } from '@/lib/store/cartStore'
 import { useAuthStore } from '@/lib/store/authStore'
@@ -256,7 +257,7 @@ export default function CartPage({ params }: CartPageProps) {
         id: item.id,
         productId: item.productId,
         name: item.productName,
-        image: item.productImageLink,
+        image: img(item.productImageLink),
         price: item.productPrice,
         discountedPrice: item.productPrice,
         discountPercent: 0,
@@ -268,7 +269,7 @@ export default function CartPage({ params }: CartPageProps) {
         id: item.productId,
         productId: item.productId,
         name: item.name,
-        image: item.image,
+        image: img(item.image),
         price: item.price,
         discountedPrice: item.discountedPrice,
         discountPercent: item.discountPercent,

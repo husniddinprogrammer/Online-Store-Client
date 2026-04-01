@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { img } from '@/lib/utils/img'
 import { ProductResponse } from '@/lib/api/types'
 import { formatCurrency } from '@/lib/utils/format'
 
@@ -8,7 +9,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const mainImage = product.images.find(img => img.isMain) || product.images[0]
+  const mainImage = product.images.find(i => i.isMain) || product.images[0]
   const hasDiscount = product.discountPercent > 0
   const discountPrice = hasDiscount ? product.discountedPrice : product.sellPrice
 
@@ -19,7 +20,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="relative aspect-square overflow-hidden bg-gray-50">
           {mainImage ? (
             <Image
-              src={mainImage.imageLink}
+              src={img(mainImage.imageLink) ?? ''}
               alt={product.name}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"

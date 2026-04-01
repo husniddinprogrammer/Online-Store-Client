@@ -1,4 +1,6 @@
-const BACKEND = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8080'
+import { BASE_IMAGE_URL, BASE_URL } from "../api/axios"
+
+const BACKEND = process.env.NEXT_PUBLIC_API_URL ?? BASE_IMAGE_URL
 
 /**
  * Resolves an image URL from the API.

@@ -114,7 +114,7 @@ function PendingCard({
         <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700">
           {mainImage ? (
             <Image
-              src={mainImage}
+              src={img(mainImage) ?? ''}
               alt={product.name}
               fill
               className="object-cover"

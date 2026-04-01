@@ -24,18 +24,18 @@ function InstagramIcon() {
   )
 }
 
-function YouTubeIcon() {
+function GitHubIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+      <path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.24c-3.34.73-4.04-1.42-4.04-1.42-.55-1.38-1.33-1.75-1.33-1.75-1.09-.75.08-.74.08-.74 1.2.09 1.84 1.24 1.84 1.24 1.08 1.84 2.83 1.31 3.52 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.39 1.24-3.23-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23A11.5 11.5 0 0 1 12 6.58c1.02 0 2.05.14 3.01.41 2.29-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.92 1.24 3.23 0 4.62-2.8 5.64-5.48 5.94.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z" />
     </svg>
   )
 }
 
-function FacebookIcon() {
+function LinkedInIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      <path d="M4.98 3.5A2.48 2.48 0 1 0 5 8.46 2.48 2.48 0 0 0 4.98 3.5ZM3 9h4v12H3V9Zm7 0h3.83v1.64h.06c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.14V21h-4v-5.48c0-1.3-.02-2.98-1.82-2.98-1.82 0-2.1 1.42-2.1 2.88V21h-4V9Z" />
     </svg>
   )
 }
@@ -55,8 +55,8 @@ export function Footer({ lang, dictionary }: FooterProps) {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.1a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 15z" />
                 </svg>
-                <a href="tel:+998712000000" className="hover:text-blue-400 transition-colors">
-                  {dictionary.footer.support}: +998 71 200 00 00
+                <a href="tel:+998915604085" className="hover:text-blue-400 transition-colors">
+                  {dictionary.footer.support}: +998 91 560 40 85
                 </a>
               </div>
               <div className="flex items-start gap-2">
@@ -97,32 +97,40 @@ export function Footer({ lang, dictionary }: FooterProps) {
             </h3>
             <div className="flex items-center gap-3">
               <a
-                href="#"
+                href="https://t.me/Husniddin301515"
+                target="_blank"
+                rel="noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors"
                 aria-label="Telegram"
               >
                 <TelegramIcon />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/husniddin_15_15_/"
+                target="_blank"
+                rel="noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-800 hover:bg-pink-600 flex items-center justify-center transition-colors"
                 aria-label="Instagram"
               >
                 <InstagramIcon />
               </a>
               <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-gray-800 hover:bg-red-600 flex items-center justify-center transition-colors"
-                aria-label="YouTube"
+                href="https://github.com/husniddinprogrammer"
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 rounded-full bg-gray-800 hover:bg-gray-600 flex items-center justify-center transition-colors"
+                aria-label="GitHub"
               >
-                <YouTubeIcon />
+                <GitHubIcon />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/husniddin-mahmudov-25225b220/"
+                target="_blank"
+                rel="noreferrer"
                 className="w-10 h-10 rounded-full bg-gray-800 hover:bg-blue-700 flex items-center justify-center transition-colors"
-                aria-label="Facebook"
+                aria-label="LinkedIn"
               >
-                <FacebookIcon />
+                <LinkedInIcon />
               </a>
             </div>
           </div>

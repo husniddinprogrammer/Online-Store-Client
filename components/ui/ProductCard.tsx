@@ -2,12 +2,13 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { img } from '@/lib/utils/img'
 import { motion } from 'framer-motion'
 import { StarRating } from './StarRating'
 import { useToggleFavorite } from '@/lib/hooks/useFavorites'
 import { useLocalCartStore } from '@/lib/store/cartStore'
 import { useAuthStore } from '@/lib/store/authStore'
-import { useAddToCart } from '@/lib/hooks/useCart'
+import { useAddToCart, useCartQuery } from '@/lib/hooks/useCart'
 import type { ProductResponse } from '@/lib/api/types'
 import type { Dictionary } from '@/lib/i18n'
 
@@ -53,9 +54,12 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
   const isLoggedIn = useAuthStore((s) => s.isLoggedIn)
   const localAddItem = useLocalCartStore((s) => s.addItem)
   const addToCartMutation = useAddToCart()
+  const { data: serverCart } = useCartQuery()
   const localCart = useLocalCartStore((s) => s.items)
 
   const inLocalCart = localCart.some((i) => i.productId === product.id)
+  const inServerCart = (serverCart?.items ?? []).some((i) => i.productId === product.id)
+  const isInCart = isLoggedIn ? inServerCart : inLocalCart
   const mainImage = getMainImage(product)
   const inStock = product.stockQuantity > 0
 
@@ -94,7 +98,7 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
         <Link href={`/${lang}/product/${product.id}`} className="absolute inset-0">
           {mainImage ? (
             <Image
-              src={mainImage}
+              src={img(mainImage) ?? ''}
               alt={product.name}
               fill
               className="object-cover"
@@ -171,7 +175,7 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
           disabled={!inStock}
           className={`mt-auto flex items-center justify-center gap-2 py-2 px-4 rounded-full text-sm font-medium transition-colors ${!inStock
               ? 'bg-gray-100 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
-              : inLocalCart
+              : isInCart
                 ? 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 border border-green-500'
                 : 'bg-blue-600 hover:bg-blue-700 text-white'
             }`}
@@ -179,7 +183,7 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
           <CartIconSm />
           {!inStock
             ? dictionary?.product?.outOfStock || 'Out of Stock'
-            : inLocalCart
+            : isInCart
               ? dictionary?.product?.inCart || 'In Cart'
               : dictionary?.product?.addToCart || 'Add to Cart'}
         </button>

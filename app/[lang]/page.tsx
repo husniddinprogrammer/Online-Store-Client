@@ -14,6 +14,7 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { ErrorState } from '@/components/ui/ErrorState'
 import { usePosters, useCategories, useProducts, useCategoriesWithProducts } from '@/lib/hooks/useProducts'
 import { getDictionary, type Locale } from '@/lib/i18n'
+import { img } from '@/lib/utils/img'
 import { useState, useEffect } from 'react'
 import type { Dictionary } from '@/lib/i18n'
 
@@ -73,7 +74,7 @@ function HomeContent({ lang, dict }: { lang: string; dict: Dictionary }) {
                   <div className="w-16 h-16 rounded-lg bg-gray-100 dark:bg-gray-700 overflow-hidden flex-shrink-0">
                     {product.images?.[0]?.imageLink ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={product.images?.[0]?.imageLink!} alt={product.name} className="w-full h-full object-cover" />
+                      <img src={img(product.images?.[0]?.imageLink) ?? ''} alt={product.name} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full bg-gray-200 dark:bg-gray-600" />
                     )}

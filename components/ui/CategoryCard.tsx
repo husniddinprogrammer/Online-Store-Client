@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { img } from '@/lib/utils/img'
 import type { CategoryResponse } from '@/lib/api/types'
 
 interface CategoryCardProps {
@@ -13,7 +14,7 @@ export function CategoryCard({ category, lang }: CategoryCardProps) {
       <div className="w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 flex items-center justify-center group-hover:border-blue-300 dark:group-hover:border-blue-500 transition-colors shadow-sm">
         {category.imageLink ? (
           <Image
-            src={category.imageLink}
+            src={img(category.imageLink) ?? ''}
             alt={category.name}
             width={80}
             height={80}

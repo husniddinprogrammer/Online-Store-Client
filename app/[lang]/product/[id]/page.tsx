@@ -14,11 +14,12 @@ import { useProduct, useProducts, useComments } from '@/lib/hooks/useProducts'
 import { useToggleFavorite } from '@/lib/hooks/useFavorites'
 import { useAuthStore } from '@/lib/store/authStore'
 import { useLocalCartStore } from '@/lib/store/cartStore'
-import { useAddToCart } from '@/lib/hooks/useCart'
+import { useAddToCart, useCartQuery } from '@/lib/hooks/useCart'
 import { useReviewEligibility } from '@/lib/hooks/useProfile'
 import { comments as commentsApi } from '@/lib/api/endpoints'
 import { useQueryClient } from '@tanstack/react-query'
 import { getDictionary, type Locale, type Dictionary } from '@/lib/i18n'
+import { img } from '@/lib/utils/img'
 
 interface ProductPageProps {
   params: Promise<{ lang: string; id: string }>
@@ -51,6 +52,7 @@ export default function ProductPage({ params }: ProductPageProps) {
   const { isFavorite, toggle: toggleFavorite } = useToggleFavorite(productId)
   const localAddItem = useLocalCartStore((s) => s.addItem)
   const addToCartMutation = useAddToCart()
+  const { data: serverCart } = useCartQuery()
   const localCart = useLocalCartStore((s) => s.items)
   const queryClient = useQueryClient()
 
@@ -89,12 +91,15 @@ export default function ProductPage({ params }: ProductPageProps) {
   }
 
   const images = product.images ?? []
-  const mainImageUrl =
+  const mainImageUrl = img(
     images[activeImage]?.imageLink ??
     images.find((i) => i.isMain)?.imageLink ??
     null
+  )
 
   const inLocalCart = localCart.some((i) => i.productId === productId)
+  const inServerCart = (serverCart?.items ?? []).some((i) => i.productId === productId)
+  const isInCart = isLoggedIn ? inServerCart : inLocalCart
   const inStock = product.stockQuantity > 0
   const commentCount = commentsData?.totalElements ?? 0
 
@@ -223,9 +228,9 @@ export default function ProductPage({ params }: ProductPageProps) {
             {/* Thumbnails */}
             {images.length > 1 && (
               <div className="flex gap-2 flex-wrap">
-                {images.map((img, i) => (
+                {images.map((image, i) => (
                   <button
-                    key={img.id}
+                    key={image.id}
                     onClick={() => setActiveImage(i)}
                     className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
                       i === activeImage
@@ -234,7 +239,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                     }`}
                   >
                     <Image
-                      src={img.imageLink}
+                      src={img(image.imageLink) ?? ''}
                       alt={`${product.name} ${i + 1}`}
                       width={64}
                       height={64}
@@ -304,7 +309,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 className={`w-full py-3 px-6 rounded-xl text-base font-semibold transition-colors flex items-center justify-center gap-2 ${
                   !inStock
                     ? 'bg-gray-100 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
-                    : inLocalCart
+                    : isInCart
                     ? 'bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 border-2 border-green-500'
                     : 'bg-blue-600 hover:bg-blue-700 text-white'
                 }`}
@@ -314,7 +319,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                   <circle cx="20" cy="21" r="1" />
                   <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                 </svg>
-                {!inStock ? dict.product.outOfStock : inLocalCart ? dict.product.inCart : dict.product.addToCart}
+                {!inStock ? dict.product.outOfStock : isInCart ? dict.product.inCart : dict.product.addToCart}
               </button>
             </div>
           </div>
