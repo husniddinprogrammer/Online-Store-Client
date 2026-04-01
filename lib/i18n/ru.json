@@ -24,10 +24,12 @@
     "discount": "Скидка",
     "rating": "Рейтинг",
     "reviews": "отзывы",
+    "noReviews": "Отзывов пока нет",
     "description": "Описание",
     "similarProducts": "Похожие товары",
     "addToFavorites": "Добавить в избранное",
-    "removeFromFavorites": "Убрать из избранного"
+    "removeFromFavorites": "Убрать из избранного",
+    "inStockCount": "В наличии ({count} шт.)"
   },
   "category": {
     "filters": "Фильтры",
@@ -39,12 +41,16 @@
     "sortBy": "Сортировать",
     "popular": "Популярные",
     "newest": "Новые",
+    "newestFirst": "Сначала новые",
     "byRating": "По рейтингу",
     "cheapest": "Дешевле",
     "expensive": "Дороже",
+    "priceHighToLow": "Цена: по убыванию",
+    "priceLowToHigh": "Цена: по возрастанию",
     "biggestDiscount": "Большая скидка",
     "smallestDiscount": "Малая скидка",
-    "noProducts": "Товары не найдены"
+    "noProducts": "Товары не найдены",
+    "productsCount": "Товаров: {count}"
   },
   "cart": {
     "title": "Товары в корзине",
@@ -109,6 +115,7 @@
     "logout": "Выйти",
     "balance": "Баланс",
     "topUp": "Пополнить",
+    "topUpTitle": "Пополнение баланса",
     "editProfile": "Редактировать профиль",
     "saveChanges": "Сохранить",
     "changePassword": "Изменить пароль",
@@ -148,6 +155,24 @@
     "onlyBuyersReview": "Только покупатели могут оставить отзыв",
     "reviewSubmitted": "Отзыв успешно оставлен",
     "yourRating": "Ваша оценка",
-    "yourComment": "Ваш отзыв"
+    "yourComment": "Ваш отзыв",
+    "role": "Роль",
+    "roleCustomer": "Клиент",
+    "roleAdmin": "Администратор",
+    "roleDelivery": "Доставщик",
+    "roleSuperAdmin": "Супер администратор",
+    "emailStatus": "Статус почты",
+    "verified": "Подтверждена",
+    "unverified": "Не подтверждена",
+    "memberSince": "С нами с",
+    "currentBalance": "Текущий баланс",
+    "quickSelect": "Быстрый выбор",
+    "amount": "Сумма",
+    "amountPlaceholder": "от {min} до {max}",
+    "minimum": "Минимум",
+    "maximum": "Максимум",
+    "balanceAfterTopUp": "После пополнения",
+    "topUpSuccess": "Баланс успешно пополнен",
+    "topUpError": "Произошла ошибка. Попробуйте снова."
   }
 }

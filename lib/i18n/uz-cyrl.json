@@ -24,10 +24,12 @@
     "discount": "Чегирма",
     "rating": "Рейтинг",
     "reviews": "шарҳлар",
+    "noReviews": "Ҳали шарҳлар йўқ",
     "description": "Таснифи",
     "similarProducts": "Ўхшаш маҳсулотлар",
     "addToFavorites": "Севимлиларга қўшиш",
-    "removeFromFavorites": "Севимлилардан олиб ташлаш"
+    "removeFromFavorites": "Севимлилардан олиб ташлаш",
+    "inStockCount": "Омборда бор ({count} та)"
   },
   "category": {
     "filters": "Фильтрлар",
@@ -39,12 +41,16 @@
     "sortBy": "Сараламоқ",
     "popular": "Машҳур",
     "newest": "Янги",
+    "newestFirst": "Аввал янгилари",
     "byRating": "Рейтинг бўйича",
     "cheapest": "Арзон",
     "expensive": "Қиммат",
+    "priceHighToLow": "Нарх: юқоридан пастга",
+    "priceLowToHigh": "Нарх: пастдан юқорига",
     "biggestDiscount": "Катта чегирма",
     "smallestDiscount": "Кичик чегирма",
-    "noProducts": "Маҳсулотлар топилмади"
+    "noProducts": "Маҳсулотлар топилмади",
+    "productsCount": "{count} та маҳсулот"
   },
   "cart": {
     "title": "Саватдаги маҳсулотлар",
@@ -109,6 +115,7 @@
     "logout": "Чиқиш",
     "balance": "Баланс",
     "topUp": "Тўлдириш",
+    "topUpTitle": "Балансни тўлдириш",
     "editProfile": "Профилни таҳрирлаш",
     "saveChanges": "Сақлаш",
     "changePassword": "Паролни ўзгартириш",
@@ -148,6 +155,24 @@
     "onlyBuyersReview": "Фақат харидорлар шарҳ қолдира олади",
     "reviewSubmitted": "Шарҳ муваффақиятли қолдирилди",
     "yourRating": "Сизнинг баҳоингиз",
-    "yourComment": "Сизнинг шарҳингиз"
+    "yourComment": "Сизнинг шарҳингиз",
+    "role": "Рол",
+    "roleCustomer": "Мижоз",
+    "roleAdmin": "Администратор",
+    "roleDelivery": "Етказиб берувчи",
+    "roleSuperAdmin": "Бош администратор",
+    "emailStatus": "Электрон почта ҳолати",
+    "verified": "Тасдиқланган",
+    "unverified": "Тасдиқланмаган",
+    "memberSince": "Аъзо бўлган сана",
+    "currentBalance": "Жорий баланс",
+    "quickSelect": "Тез танлаш",
+    "amount": "Миқдор",
+    "amountPlaceholder": "{min} дан {max} гача",
+    "minimum": "Минимум",
+    "maximum": "Максимум",
+    "balanceAfterTopUp": "Тўлдирилгандан кейин",
+    "topUpSuccess": "Баланс муваффақиятли тўлдирилди",
+    "topUpError": "Хатолик юз берди. Қайта уриниб кўринг."
   }
 }

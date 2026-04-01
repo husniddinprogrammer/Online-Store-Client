@@ -17,6 +17,15 @@ export function useProduct(id: number) {
   })
 }
 
+export function useCategory(id: number | undefined) {
+  return useQuery({
+    queryKey: ['category', id],
+    queryFn: () => categories.getCategory(id!).then((r) => r.data.data),
+    enabled: !!id,
+    staleTime: 5 * 60 * 1000,
+  })
+}
+
 export function useCategories(params?: CategoriesParams) {
   return useQuery({
     queryKey: ['categories', params],

@@ -102,6 +102,9 @@ export default function ProductPage({ params }: ProductPageProps) {
   const isInCart = isLoggedIn ? inServerCart : inLocalCart
   const inStock = product.stockQuantity > 0
   const commentCount = commentsData?.totalElements ?? 0
+  const stockLabel = inStock
+    ? dict.product.inStockCount.replace('{count}', String(product.stockQuantity))
+    : dict.product.outOfStock
 
   const handleAddToCart = () => {
     if (isLoggedIn) {
@@ -299,7 +302,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 
               {/* Stock */}
               <p className={`text-sm mb-5 font-medium ${inStock ? 'text-green-600 dark:text-green-400' : 'text-red-500'}`}>
-                {inStock ? `Omborda bor (${product.stockQuantity} ta)` : dict.product.outOfStock}
+                {stockLabel}
               </p>
 
               {/* Add to cart button */}
@@ -386,7 +389,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           <div className="flex flex-col gap-4">
             {commentsList.length === 0 ? (
               <p className="text-gray-500 dark:text-gray-400 text-sm py-4">
-                Hali sharhlar yo&apos;q
+                {dict.product.noReviews}
               </p>
             ) : (
               commentsList.map((comment) => (

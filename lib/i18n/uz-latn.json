@@ -24,10 +24,12 @@
     "discount": "Chegirma",
     "rating": "Reyting",
     "reviews": "sharhlar",
+    "noReviews": "Hali sharhlar yo'q",
     "description": "Tasnifi",
     "similarProducts": "O'xshash mahsulotlar",
     "addToFavorites": "Sevimlilarга qo'shish",
-    "removeFromFavorites": "Sevimlilardan olib tashlash"
+    "removeFromFavorites": "Sevimlilardan olib tashlash",
+    "inStockCount": "Omborda bor ({count} ta)"
   },
   "category": {
     "filters": "Filtrlar",
@@ -39,12 +41,16 @@
     "sortBy": "Saralash",
     "popular": "Mashhur",
     "newest": "Yangi",
+    "newestFirst": "Avval yangilari",
     "byRating": "Reyting bo'yicha",
     "cheapest": "Arzon",
     "expensive": "Qimmat",
+    "priceHighToLow": "Narx: yuqoridan pastga",
+    "priceLowToHigh": "Narx: pastdan yuqoriga",
     "biggestDiscount": "Katta chegirma",
     "smallestDiscount": "Kichik chegirma",
-    "noProducts": "Mahsulotlar topilmadi"
+    "noProducts": "Mahsulotlar topilmadi",
+    "productsCount": "{count} ta mahsulot"
   },
   "cart": {
     "title": "Savatdagi mahsulotlar",
@@ -109,6 +115,7 @@
     "logout": "Chiqish",
     "balance": "Balans",
     "topUp": "To'ldirish",
+    "topUpTitle": "Balansni to'ldirish",
     "editProfile": "Profilni tahrirlash",
     "saveChanges": "Saqlash",
     "changePassword": "Parolni o'zgartirish",
@@ -148,6 +155,24 @@
     "onlyBuyersReview": "Faqat xaridorlar sharh qoldira oladi",
     "reviewSubmitted": "Sharh muvaffaqiyatli qoldirildi",
     "yourRating": "Sizning bahoyingiz",
-    "yourComment": "Sizning sharhinggiz"
+    "yourComment": "Sizning sharhinggiz",
+    "role": "Rol",
+    "roleCustomer": "Mijoz",
+    "roleAdmin": "Administrator",
+    "roleDelivery": "Yetkazib beruvchi",
+    "roleSuperAdmin": "Bosh administrator",
+    "emailStatus": "Email holati",
+    "verified": "Tasdiqlangan",
+    "unverified": "Tasdiqlanmagan",
+    "memberSince": "A'zo bo'lgan sana",
+    "currentBalance": "Joriy balans",
+    "quickSelect": "Tez tanlash",
+    "amount": "Miqdor",
+    "amountPlaceholder": "{min} dan {max} gacha",
+    "minimum": "Minimum",
+    "maximum": "Maksimum",
+    "balanceAfterTopUp": "To'ldirilgandan keyin",
+    "topUpSuccess": "Balans muvaffaqiyatli to'ldirildi",
+    "topUpError": "Xatolik yuz berdi. Qayta urinib ko'ring."
   }
 }

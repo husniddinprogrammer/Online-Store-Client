@@ -53,10 +53,12 @@ export type Dictionary = {
     discount: string
     rating: string
     reviews: string
+    noReviews: string
     description: string
     similarProducts: string
     addToFavorites: string
     removeFromFavorites: string
+    inStockCount: string
   }
   category: {
     filters: string
@@ -68,12 +70,16 @@ export type Dictionary = {
     sortBy: string
     popular: string
     newest: string
+    newestFirst: string
     byRating: string
     cheapest: string
     expensive: string
+    priceHighToLow: string
+    priceLowToHigh: string
     biggestDiscount: string
     smallestDiscount: string
     noProducts: string
+    productsCount: string
   }
   cart: {
     title: string
@@ -138,6 +144,7 @@ export type Dictionary = {
     logout: string
     balance: string
     topUp: string
+    topUpTitle: string
     editProfile: string
     saveChanges: string
     changePassword: string
@@ -178,5 +185,23 @@ export type Dictionary = {
     reviewSubmitted: string
     yourRating: string
     yourComment: string
+    role: string
+    roleCustomer: string
+    roleAdmin: string
+    roleDelivery: string
+    roleSuperAdmin: string
+    emailStatus: string
+    verified: string
+    unverified: string
+    memberSince: string
+    currentBalance: string
+    quickSelect: string
+    amount: string
+    amountPlaceholder: string
+    minimum: string
+    maximum: string
+    balanceAfterTopUp: string
+    topUpSuccess: string
+    topUpError: string
   }
 }

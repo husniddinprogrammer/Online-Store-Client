@@ -8,7 +8,9 @@ import { FooterBottom } from '@/components/layout/FooterBottom'
 import { ProductGrid } from '@/components/products/ProductGrid'
 import { Pagination } from '@/components/ui/Pagination'
 import { SortSelect } from '@/components/ui/SortSelect'
-import { useProducts } from '@/lib/hooks/useProducts'
+import Image from 'next/image'
+import { useProducts, useCategory } from '@/lib/hooks/useProducts'
+import { img } from '@/lib/utils/img'
 import { getDictionary, type Locale, type Dictionary } from '@/lib/i18n'
 
 interface CategoryPageProps {
@@ -25,6 +27,7 @@ function CategoryContent({ lang, id, dict }: { lang: string; id: string; dict: D
 
   const categoryId = id !== 'all' ? parseInt(id, 10) : undefined
 
+  const { data: category } = useCategory(categoryId)
   const { data: productsData, isLoading, error } = useProducts({
     page,
     size: 20,
@@ -57,19 +60,39 @@ function CategoryContent({ lang, id, dict }: { lang: string; id: string; dict: D
 
   const products = productsData?.content ?? []
   const totalPages = productsData?.totalPages ?? 0
+  const productsCountLabel = productsData?.totalElements != null
+    ? dict.category.productsCount.replace('{count}', String(productsData.totalElements))
+    : dict.common.loading
 
   return (
     <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          {categoryId ? `Category ${id}` : dict.home.latestProducts}
-        </h1>
-        <p className="text-gray-600">
-          {productsData?.totalElements
-            ? `${productsData.totalElements} ${productsData.totalElements === 1 ? 'product' : 'products'} found`
-            : dict.common.loading}
-        </p>
+      <div className="flex items-center gap-4 mb-6">
+        {categoryId && (
+          <div className="w-14 h-14 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex-shrink-0 flex items-center justify-center">
+            {category?.imageLink ? (
+              <Image
+                src={img(category.imageLink) ?? ''}
+                alt={category.name}
+                width={56}
+                height={56}
+                className="object-cover w-full h-full"
+              />
+            ) : (
+              <svg className="w-7 h-7 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+              </svg>
+            )}
+          </div>
+        )}
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+            {categoryId ? (category?.name ?? '...') : dict.home.latestProducts}
+          </h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+            {productsCountLabel}
+          </p>
+        </div>
       </div>
 
       {/* Sort controls */}
@@ -78,7 +101,7 @@ function CategoryContent({ lang, id, dict }: { lang: string; id: string; dict: D
           <label htmlFor="sort-select" className="text-sm font-medium text-gray-700">
             {dict.category.sortBy}:
           </label>
-          <SortSelect value={sort} onChange={handleSort} />
+          <SortSelect value={sort} onChange={handleSort} dictionary={dict.category} />
         </div>
       </div>
 

@@ -57,6 +57,9 @@ function CompanyContent({ lang, id, dict }: { lang: string; id: string; dict: Di
 
   const products = productsData?.content ?? []
   const totalPages = productsData?.totalPages ?? 0
+  const productsCountLabel = productsData?.totalElements != null
+    ? dict.category.productsCount.replace('{count}', String(productsData.totalElements))
+    : dict.common.loading
 
   return (
     <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -66,9 +69,7 @@ function CompanyContent({ lang, id, dict }: { lang: string; id: string; dict: Di
           {dict.home.categories} {id}
         </h1>
         <p className="text-gray-600">
-          {productsData?.totalElements
-            ? `${productsData.totalElements} ${productsData.totalElements === 1 ? 'product' : 'products'} found`
-            : dict.common.loading}
+          {productsCountLabel}
         </p>
       </div>
 
@@ -78,7 +79,7 @@ function CompanyContent({ lang, id, dict }: { lang: string; id: string; dict: Di
           <label htmlFor="sort-select" className="text-sm font-medium text-gray-700">
             {dict.category.sortBy}:
           </label>
-          <SortSelect value={sort} onChange={handleSort} />
+          <SortSelect value={sort} onChange={handleSort} dictionary={dict.category} />
         </div>
       </div>
 

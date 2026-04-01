@@ -99,6 +99,8 @@ export const categories = {
       '/api/categories',
       { params }
     ),
+  getCategory: (id: number) =>
+    axiosInstance.get<ApiResponse<CategoryResponse>>(`/api/categories/${id}`),
 }
 
 // ──────────────────────────────────────────────

@@ -1,7 +1,7 @@
 'use client'
 
 import { use, useState, useEffect, useRef } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/lib/store/authStore'
 import { useToastStore } from '@/lib/store/toastStore'
@@ -161,11 +161,11 @@ function AddressForm({
   onCancel: () => void
   isPending: boolean
 }) {
-  const { register, handleSubmit, watch, setValue } = useForm<AddressFields>({
+  const { register, handleSubmit, control, setValue } = useForm<AddressFields>({
     defaultValues: initial ?? { regionType: '', cityType: '', homeNumber: '', roomNumber: '' },
   })
 
-  const selectedRegion = watch('regionType')
+  const selectedRegion = useWatch({ control, name: 'regionType' })
   const availableCities = REGION_CITIES[selectedRegion] ?? []
 
   // Reset city when region changes (skip on initial render)
@@ -261,7 +261,7 @@ interface PasswordFields {
 export default function PersonalDataPage({ params }: PageProps) {
   const { lang } = use(params)
   const [dict, setDict] = useState<Dictionary | null>(null)
-  const [isAuthInitialized, setIsAuthInitialized] = useState(false)
+  const isAuthInitialized = useRef(false)
 
   useEffect(() => {
     getDictionary(lang as Locale).then(setDict)
@@ -281,15 +281,15 @@ export default function PersonalDataPage({ params }: PageProps) {
 
   useEffect(() => {
     initialize()
-    setIsAuthInitialized(true)
+    isAuthInitialized.current = true
   }, [initialize])
 
   // Redirect if not logged in (after mount)
   useEffect(() => {
-    if (isAuthInitialized && !isLoggedIn) {
+    if (isAuthInitialized.current && !isLoggedIn) {
       router.replace(`/${lang}/login`)
     }
-  }, [isLoggedIn, lang, router, isAuthInitialized])
+  }, [isLoggedIn, lang, router])
 
   const [editingAddressId, setEditingAddressId] = useState<number | null>(null)
   const [showAddAddress, setShowAddAddress] = useState(false)
@@ -310,14 +310,14 @@ export default function PersonalDataPage({ params }: PageProps) {
     }
   }, [me]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Redirect if not logged in (after mount)
-  useEffect(() => {
-    if (!isLoggedIn) {
-      router.replace(`/${lang}/login`)
-    }
-  }, [isLoggedIn, lang, router])
-
   if (!dict) return null
+
+  const roleLabels: Record<string, string> = {
+    CUSTOMER: dict.profile.roleCustomer,
+    ADMIN: dict.profile.roleAdmin,
+    DELIVERY: dict.profile.roleDelivery,
+    SUPER_ADMIN: dict.profile.roleSuperAdmin,
+  }
 
   const handleProfileSubmit = async (data: ProfileFields) => {
     try {
@@ -670,26 +670,26 @@ export default function PersonalDataPage({ params }: PageProps) {
                 <span className="font-medium text-gray-900 dark:text-gray-100 truncate max-w-[160px]">{me?.email}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-gray-500 dark:text-gray-400">Role</span>
+                <span className="text-gray-500 dark:text-gray-400">{dict.profile.role}</span>
                 <span className="px-2 py-0.5 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium">
-                  {me?.role}
+                  {me?.role ? roleLabels[me.role] ?? me.role : '—'}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-gray-500 dark:text-gray-400">Email</span>
+                <span className="text-gray-500 dark:text-gray-400">{dict.profile.emailStatus}</span>
                 {me?.emailVerified ? (
                   <span className="px-2 py-0.5 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 rounded-full text-xs font-medium">
-                    Verified
+                    {dict.profile.verified}
                   </span>
                 ) : (
                   <span className="px-2 py-0.5 bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300 rounded-full text-xs font-medium">
-                    Unverified
+                    {dict.profile.unverified}
                   </span>
                 )}
               </div>
               {me?.createdAt && (
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-500 dark:text-gray-400">Member since</span>
+                  <span className="text-gray-500 dark:text-gray-400">{dict.profile.memberSince}</span>
                   <span className="font-medium text-gray-900 dark:text-gray-100">
                     {new Date(me.createdAt).toLocaleDateString()}
                   </span>
@@ -704,6 +704,7 @@ export default function PersonalDataPage({ params }: PageProps) {
         open={showTopUp}
         onClose={() => setShowTopUp(false)}
         currentBalance={me?.balance ?? 0}
+        dictionary={dict}
       />
     </div>
   )

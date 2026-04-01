@@ -1,15 +1,18 @@
+import type { Dictionary } from '@/lib/i18n'
+
 interface SortSelectProps {
   value: string
   onChange: (value: string) => void
+  dictionary?: Dictionary['category']
 }
 
-const sortOptions = [
-  { value: 'PRICE_ASC', label: 'Price: Low to High' },
-  { value: 'PRICE_DESC', label: 'Price: High to Low' },
-  { value: 'NEWEST', label: 'Newest First' },
-]
+export function SortSelect({ value, onChange, dictionary }: SortSelectProps) {
+  const sortOptions = [
+    { value: 'PRICE_ASC', label: dictionary?.priceLowToHigh ?? 'Price: Low to High' },
+    { value: 'PRICE_DESC', label: dictionary?.priceHighToLow ?? 'Price: High to Low' },
+    { value: 'NEWEST', label: dictionary?.newestFirst ?? 'Newest First' },
+  ]
 
-export function SortSelect({ value, onChange }: SortSelectProps) {
   return (
     <div className="relative">
       <select
