@@ -1,5 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { img } from '@/lib/utils/img'
 import { ProductResponse } from '@/lib/api/types'
 import { formatCurrency } from '@/lib/utils/format'
@@ -11,96 +14,104 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const mainImage = product.images.find(i => i.isMain) || product.images[0]
   const hasDiscount = product.discountPercent > 0
-  const discountPrice = hasDiscount ? product.discountedPrice : product.sellPrice
+  const displayPrice = hasDiscount ? product.discountedPrice : product.sellPrice
+  const inStock = product.stockQuantity > 0
 
   return (
-    <Link href={`/product/${product.id}`} className="group block h-full">
-      <div className="h-full bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-lg hover:border-gray-300 flex flex-col">
-        {/* Product Image */}
-        <div className="relative aspect-square overflow-hidden bg-gray-50">
-          {mainImage ? (
-            <Image
-              src={img(mainImage.imageLink) ?? ''}
-              alt={product.name}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="text-gray-400 text-sm">No image</div>
-            </div>
-          )}
-          
-          {/* Discount Badge */}
-          {hasDiscount && (
-            <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-semibold">
-              -{product.discountPercent}%
-            </div>
-          )}
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+    >
+      <Link href={`/product/${product.id}`} className="group block h-full">
+        <div className="h-full bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/70 dark:border-slate-800 overflow-hidden hover:border-blue-200 dark:hover:border-blue-900 hover:shadow-xl hover:shadow-slate-900/8 dark:hover:shadow-slate-900/50 transition-all duration-300 flex flex-col">
 
-          {/* Rating Badge */}
-          {product.averageRating > 0 && (
-            <div className="absolute top-2 right-2 bg-black/70 text-white px-2 py-1 rounded-md text-xs font-semibold flex items-center gap-1">
-              <span>⭐</span>
-              <span>{product.averageRating.toFixed(1)}</span>
+          {/* Image */}
+          <div className="relative aspect-square overflow-hidden bg-slate-50 dark:bg-slate-800">
+            {mainImage ? (
+              <>
+                <Image
+                  src={img(mainImage.imageLink) ?? ''}
+                  alt={product.name}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
+                />
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <svg className="w-12 h-12 text-slate-300 dark:text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+            )}
+
+            {/* Badges */}
+            <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5">
+              {hasDiscount && (
+                <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-lg shadow-sm">
+                  -{product.discountPercent}%
+                </span>
+              )}
+              {!inStock && (
+                <span className="bg-slate-900/80 text-white text-xs font-medium px-2 py-0.5 rounded-lg backdrop-blur-sm">
+                  Tugagan
+                </span>
+              )}
             </div>
-          )}
+
+            {product.averageRating > 0 && (
+              <div className="absolute top-2.5 right-2.5 flex items-center gap-1 bg-black/60 backdrop-blur-sm text-white text-xs font-semibold px-2 py-1 rounded-lg">
+                <svg className="w-3 h-3 text-yellow-400 fill-yellow-400" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                {product.averageRating.toFixed(1)}
+              </div>
+            )}
+          </div>
+
+          {/* Info */}
+          <div className="p-4 flex flex-col flex-1 gap-2">
+            <h3 className="font-semibold text-slate-800 dark:text-slate-100 text-sm line-clamp-2 leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              {product.name}
+            </h3>
+
+            <div className="flex flex-wrap gap-1.5">
+              {product.category && (
+                <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+                  {product.category.name}
+                </span>
+              )}
+              {product.company && (
+                <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+                  {product.company.name}
+                </span>
+              )}
+            </div>
+
+            <div className="mt-auto pt-2 flex items-end justify-between gap-2">
+              <div className="flex flex-col">
+                <span className="text-base font-bold text-slate-900 dark:text-white">
+                  {formatCurrency(displayPrice)}
+                </span>
+                {hasDiscount && (
+                  <span className="text-xs text-slate-400 line-through">
+                    {formatCurrency(product.sellPrice)}
+                  </span>
+                )}
+              </div>
+              <span className={`text-xs font-medium px-2 py-0.5 rounded-lg ${
+                inStock
+                  ? 'text-emerald-700 bg-emerald-50 dark:text-emerald-400 dark:bg-emerald-950/40'
+                  : 'text-red-600 bg-red-50 dark:text-red-400 dark:bg-red-950/40'
+              }`}>
+                {inStock ? `${product.stockQuantity} ta` : 'Tugagan'}
+              </span>
+            </div>
+          </div>
         </div>
-
-        {/* Product Info */}
-        <div className="p-4 flex flex-col flex-1">
-          {/* Product Name */}
-          <h3 className="font-medium text-gray-900 text-sm line-clamp-2 mb-2 min-h-[2.5rem]">
-            {product.name}
-          </h3>
-
-          {/* Category & Company */}
-          <div className="min-h-[2rem] flex flex-wrap items-start gap-2 text-xs text-gray-500 mb-3">
-            {product.category && (
-              <span className="bg-gray-100 px-2 py-1 rounded">
-                {product.category.name}
-              </span>
-            )}
-            {product.company && (
-              <span className="bg-gray-100 px-2 py-1 rounded">
-                {product.company.name}
-              </span>
-            )}
-          </div>
-
-          {/* Price */}
-          <div className="min-h-[2rem] flex items-center gap-2 mb-2">
-            <span className="text-lg font-bold text-gray-900">
-              {formatCurrency(discountPrice)}
-            </span>
-            {hasDiscount && (
-              <span className="text-sm text-gray-500 line-through">
-                {formatCurrency(product.sellPrice)}
-              </span>
-            )}
-          </div>
-
-          {/* Stock Status */}
-          <div className="mt-auto flex items-center justify-between">
-            <span className={`text-xs font-medium ${
-              product.stockQuantity > 0 
-                ? 'text-green-600' 
-                : 'text-red-600'
-            }`}>
-              {product.stockQuantity > 0 
-                ? `In stock (${product.stockQuantity})` 
-                : 'Out of stock'
-              }
-            </span>
-            {product.soldQuantity > 0 && (
-              <span className="text-xs text-gray-500">
-                {product.soldQuantity} sold
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
-    </Link>
+      </Link>
+    </motion.div>
   )
 }

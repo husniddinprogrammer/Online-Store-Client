@@ -42,12 +42,12 @@ function LinkedInIcon() {
 
 export function Footer({ lang, dictionary }: FooterProps) {
   return (
-    <footer className="bg-gray-900 dark:bg-gray-950 text-gray-300 pt-12 pb-6">
+    <footer className="bg-slate-950 text-slate-400 pt-14 pb-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-gray-800">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10 border-b border-slate-800/60">
           {/* Left: Logo + contact */}
           <div className="flex flex-col gap-4">
-            <Link href={`/${lang}`} className="text-2xl font-bold text-blue-400">
+            <Link href={`/${lang}`} className="text-2xl font-bold gradient-text w-fit">
               Online Store
             </Link>
             <div className="flex flex-col gap-2 text-sm">
@@ -71,20 +71,20 @@ export function Footer({ lang, dictionary }: FooterProps) {
 
           {/* Center: Nav links */}
           <div className="flex flex-col gap-3">
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider">
+            <h3 className="text-white font-semibold text-xs uppercase tracking-widest">
               {dictionary.footer.pages}
             </h3>
-            <div className="flex flex-col gap-2 text-sm">
-              <Link href={`/${lang}`} className="hover:text-blue-400 transition-colors">
+            <div className="flex flex-col gap-2.5 text-sm">
+              <Link href={`/${lang}`} className="hover:text-blue-400 hover:translate-x-1 transition-all duration-150 w-fit">
                 {dictionary.footer.home}
               </Link>
-              <Link href={`/${lang}/category/all`} className="hover:text-blue-400 transition-colors">
+              <Link href={`/${lang}/category/all`} className="hover:text-blue-400 hover:translate-x-1 transition-all duration-150 w-fit">
                 {dictionary.footer.categories}
               </Link>
-              <Link href={`/${lang}/cart`} className="hover:text-blue-400 transition-colors">
+              <Link href={`/${lang}/cart`} className="hover:text-blue-400 hover:translate-x-1 transition-all duration-150 w-fit">
                 {dictionary.footer.cart}
               </Link>
-              <Link href={`/${lang}/favorites`} className="hover:text-blue-400 transition-colors">
+              <Link href={`/${lang}/favorites`} className="hover:text-blue-400 hover:translate-x-1 transition-all duration-150 w-fit">
                 {dictionary.footer.favorites}
               </Link>
             </div>
@@ -92,15 +92,15 @@ export function Footer({ lang, dictionary }: FooterProps) {
 
           {/* Right: Social */}
           <div className="flex flex-col gap-3">
-            <h3 className="text-white font-semibold text-sm uppercase tracking-wider">
+            <h3 className="text-white font-semibold text-xs uppercase tracking-widest">
               {dictionary.footer.followUs}
             </h3>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
               <a
                 href="https://t.me/Husniddin301515"
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 rounded-full bg-gray-800 hover:bg-blue-600 flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-blue-600 hover:text-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm"
                 aria-label="Telegram"
               >
                 <TelegramIcon />
@@ -109,7 +109,7 @@ export function Footer({ lang, dictionary }: FooterProps) {
                 href="https://www.instagram.com/husniddin_15_15_/"
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 rounded-full bg-gray-800 hover:bg-pink-600 flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-gradient-to-br hover:from-pink-500 hover:to-purple-600 hover:text-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm"
                 aria-label="Instagram"
               >
                 <InstagramIcon />
@@ -118,7 +118,7 @@ export function Footer({ lang, dictionary }: FooterProps) {
                 href="https://github.com/husniddinprogrammer"
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 rounded-full bg-gray-800 hover:bg-gray-600 flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-600 hover:text-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm"
                 aria-label="GitHub"
               >
                 <GitHubIcon />
@@ -127,7 +127,7 @@ export function Footer({ lang, dictionary }: FooterProps) {
                 href="https://www.linkedin.com/in/husniddin-mahmudov-25225b220/"
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 rounded-full bg-gray-800 hover:bg-blue-700 flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-xl bg-slate-800 hover:bg-blue-700 hover:text-white hover:scale-110 flex items-center justify-center transition-all duration-200 shadow-sm"
                 aria-label="LinkedIn"
               >
                 <LinkedInIcon />

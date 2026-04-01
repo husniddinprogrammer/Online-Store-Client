@@ -164,13 +164,13 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
   )
 
   return (
-    <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+    <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-800/60 shadow-sm shadow-slate-900/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center h-16 gap-3">
           {/* Logo */}
           <Link
             href={`/${lang}`}
-            className="flex-shrink-0 text-xl font-bold text-blue-600 dark:text-blue-400 mr-2"
+            className="flex-shrink-0 mr-2 text-xl font-bold gradient-text tracking-tight"
           >
             Online Store
           </Link>
@@ -179,7 +179,7 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
           <div className="relative hidden md:block" ref={catalogRef}>
             <button
               onClick={() => setShowCatalog((v) => !v)}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white text-sm font-semibold transition-all duration-150 shadow-sm shadow-blue-600/30 hover:shadow-blue-500/40"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <line x1="8" y1="6" x2="21" y2="6" />
@@ -193,16 +193,16 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
             </button>
 
             {showCatalog && (
-              <div className="absolute top-full left-0 mt-2 w-[480px] bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-4 z-50">
-                <div className="grid grid-cols-4 gap-3">
+              <div className="absolute top-full left-0 mt-2 w-[520px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl shadow-slate-900/10 border border-slate-200/70 dark:border-slate-700/60 p-5 z-50">
+                <div className="grid grid-cols-4 gap-2">
                   {filteredCategories.map((cat: any) => (
                     <Link
                       key={cat.id}
                       href={`/${lang}/category/${cat.id}`}
                       onClick={() => setShowCatalog(false)}
-                      className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-center"
+                      className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-all duration-150 text-center group"
                     >
-                      <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center overflow-hidden">
+                      <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden ring-1 ring-slate-200 dark:ring-slate-700 group-hover:ring-blue-300 dark:group-hover:ring-blue-700 transition-all">
                         {cat.imageLink ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img src={img(cat.imageLink) ?? ''} alt={cat.name} className="w-full h-full object-cover" />
@@ -212,7 +212,7 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
                           </svg>
                         )}
                       </div>
-                      <span className="text-xs text-gray-700 dark:text-gray-300 line-clamp-2">{cat.name}</span>
+                      <span className="text-xs font-medium text-slate-600 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-2 transition-colors">{cat.name}</span>
                     </Link>
                   ))}
                 </div>
@@ -228,10 +228,10 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={dictionary.nav.search + '...'}
-                className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-400 dark:focus:border-blue-500 transition-all"
               />
-              <button type="submit" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <button type="submit" className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-500 transition-colors">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <circle cx="11" cy="11" r="8" />
                   <line x1="21" y1="21" x2="16.65" y2="16.65" />
                 </svg>
@@ -240,12 +240,12 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
           </form>
 
           {/* Right icons */}
-          <div className="flex items-center gap-1 ml-auto">
+          <div className="flex items-center gap-0.5 ml-auto">
             {/* Dark mode toggle */}
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 transition-all duration-150"
                 aria-label={dictionary.nav.darkMode}
               >
                 {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
@@ -256,22 +256,22 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
             <div className="relative hidden md:block" ref={langRef}>
               <button
                 onClick={() => setShowLang((v) => !v)}
-                className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 transition-all duration-150"
                 aria-label={dictionary.nav.language}
               >
                 <GlobeIcon />
               </button>
 
               {showLang && (
-                <div className="absolute right-0 top-full mt-2 w-40 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-50">
+                <div className="absolute right-0 top-full mt-2 w-44 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl shadow-slate-900/10 border border-slate-200/70 dark:border-slate-700/60 overflow-hidden z-50">
                   {locales.map((locale) => (
                     <button
                       key={locale}
                       onClick={() => handleLanguageChange(locale)}
-                      className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
+                      className={`w-full text-left px-4 py-3 text-sm font-medium transition-colors ${
                         locale === lang
-                          ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium'
-                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                          ? 'bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400'
+                          : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
                       }`}
                     >
                       {localeNames[locale]}
@@ -284,12 +284,12 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
             {/* Favorites */}
             <Link
               href={`/${lang}/favorites`}
-              className="relative p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors hidden md:flex"
+              className="relative p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-red-500 dark:hover:text-red-400 transition-all duration-150 hidden md:flex"
               aria-label={dictionary.nav.favorites}
             >
               <HeartIcon />
               {favoritesCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[10px] min-w-[18px] h-[18px] rounded-full flex items-center justify-center font-bold px-1">
                   {favoritesCount > 9 ? '9+' : favoritesCount}
                 </span>
               )}
@@ -298,12 +298,12 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
             {/* Cart */}
             <Link
               href={`/${lang}/cart`}
-              className="relative p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors hidden md:flex"
+              className="relative p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-150 hidden md:flex"
               aria-label={dictionary.nav.cart}
             >
               <CartIcon />
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 bg-blue-600 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                <span className="absolute -top-0.5 -right-0.5 bg-blue-600 text-white text-[10px] min-w-[18px] h-[18px] rounded-full flex items-center justify-center font-bold px-1">
                   {cartCount > 9 ? '9+' : cartCount}
                 </span>
               )}
@@ -313,7 +313,7 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
             {isLoggedIn && user ? (
               <Link
                 href={`/${lang}/profile`}
-                className="hidden md:flex w-9 h-9 rounded-full bg-blue-600 text-white items-center justify-center font-bold text-sm hover:bg-blue-700 transition-colors ml-1"
+                className="hidden md:flex ml-1 w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 text-white items-center justify-center font-bold text-sm hover:from-blue-400 hover:to-blue-600 transition-all shadow-sm shadow-blue-600/30"
                 aria-label={dictionary.nav.profile}
               >
                 {user.name.charAt(0).toUpperCase()}
@@ -321,7 +321,7 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
             ) : (
               <Link
                 href={`/${lang}/login`}
-                className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-sm"
+                className="hidden md:flex items-center gap-2 px-4 py-2 ml-1 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-all shadow-sm shadow-blue-600/30"
               >
                 <UserIcon />
                 <span className="hidden lg:inline">{dictionary.nav.login}</span>
@@ -331,7 +331,7 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
             {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen((v) => !v)}
-              className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors md:hidden"
+              className="p-2 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150 md:hidden"
               aria-label="Menu"
             >
               {mobileOpen ? <XIcon /> : <MenuIcon />}
@@ -341,7 +341,7 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="md:hidden pb-4 border-t border-gray-200 dark:border-gray-700 mt-1">
+          <div className="md:hidden pb-4 border-t border-slate-200/60 dark:border-slate-800/60 mt-1">
             {/* Mobile search */}
             <form onSubmit={handleSearch} className="py-3">
               <div className="relative">
@@ -350,10 +350,10 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={dictionary.nav.search + '...'}
-                  className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 />
-                <button type="submit" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <button type="submit" className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
                   </svg>
@@ -361,22 +361,22 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
               </div>
             </form>
 
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-0.5">
               <Link
                 href={`/${lang}/cart`}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition-colors"
               >
                 <CartIcon />
                 {dictionary.nav.cart}
                 {cartCount > 0 && (
-                  <span className="ml-auto bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full">{cartCount}</span>
+                  <span className="ml-auto bg-blue-600 text-white text-xs px-2 py-0.5 rounded-full font-semibold">{cartCount}</span>
                 )}
               </Link>
               <Link
                 href={`/${lang}/favorites`}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition-colors"
               >
                 <HeartIcon />
                 {dictionary.nav.favorites}
@@ -385,7 +385,7 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
                 <Link
                   href={`/${lang}/profile`}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition-colors"
                 >
                   <UserIcon />
                   {dictionary.nav.profile}
@@ -394,7 +394,7 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
                 <Link
                   href={`/${lang}/login`}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="flex items-center gap-3 px-3 py-3 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium transition-colors"
                 >
                   <UserIcon />
                   {dictionary.nav.login}
@@ -402,8 +402,8 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
               )}
 
               {/* Mobile language switcher */}
-              <div className="px-3 py-2 border-t border-gray-100 dark:border-gray-700 mt-1">
-                <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">{dictionary.nav.language}</p>
+              <div className="px-3 pt-3 mt-1 border-t border-slate-100 dark:border-slate-800">
+                <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">{dictionary.nav.language}</p>
                 <div className="flex gap-2">
                   {locales.map((locale) => (
                     <button
@@ -412,10 +412,10 @@ export function Navbar({ lang, dictionary }: NavbarProps) {
                         handleLanguageChange(locale)
                         setMobileOpen(false)
                       }}
-                      className={`flex-1 text-xs py-1.5 rounded-lg font-medium transition-colors ${
+                      className={`flex-1 text-xs py-2 rounded-xl font-semibold transition-colors ${
                         locale === lang
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                          ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30'
+                          : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                       }`}
                     >
                       {localeNames[locale]}
