@@ -14,8 +14,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const discountPrice = hasDiscount ? product.discountedPrice : product.sellPrice
 
   return (
-    <Link href={`/product/${product.id}`} className="group">
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-lg hover:border-gray-300">
+    <Link href={`/product/${product.id}`} className="group block h-full">
+      <div className="h-full bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-lg hover:border-gray-300 flex flex-col">
         {/* Product Image */}
         <div className="relative aspect-square overflow-hidden bg-gray-50">
           {mainImage ? (
@@ -49,14 +49,14 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Product Info */}
-        <div className="p-4">
+        <div className="p-4 flex flex-col flex-1">
           {/* Product Name */}
           <h3 className="font-medium text-gray-900 text-sm line-clamp-2 mb-2 min-h-[2.5rem]">
             {product.name}
           </h3>
 
           {/* Category & Company */}
-          <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
+          <div className="min-h-[2rem] flex flex-wrap items-start gap-2 text-xs text-gray-500 mb-3">
             {product.category && (
               <span className="bg-gray-100 px-2 py-1 rounded">
                 {product.category.name}
@@ -70,7 +70,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Price */}
-          <div className="flex items-center gap-2 mb-2">
+          <div className="min-h-[2rem] flex items-center gap-2 mb-2">
             <span className="text-lg font-bold text-gray-900">
               {formatCurrency(discountPrice)}
             </span>
@@ -82,7 +82,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Stock Status */}
-          <div className="flex items-center justify-between">
+          <div className="mt-auto flex items-center justify-between">
             <span className={`text-xs font-medium ${
               product.stockQuantity > 0 
                 ? 'text-green-600' 

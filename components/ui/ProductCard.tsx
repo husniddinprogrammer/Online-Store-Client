@@ -91,7 +91,7 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
     <motion.div
       whileHover={{ scale: 1.02 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col"
+      className="h-full bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col"
     >
       {/* Image area */}
       <div className="relative" style={{ aspectRatio: '1/1' }}>
@@ -130,8 +130,8 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
 
       {/* Content */}
       <div className="p-3 flex flex-col gap-2 flex-1">
-        <Link href={`/${lang}/product/${product.id}`}>
-          <h3 className="text-sm font-medium text-gray-800 dark:text-gray-100 line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors leading-tight">
+        <Link href={`/${lang}/product/${product.id}`} className="min-h-[2.5rem]">
+          <h3 className="min-h-[2.5rem] text-sm font-medium text-gray-800 dark:text-gray-100 line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors leading-tight">
             {product.name}
           </h3>
         </Link>
@@ -139,7 +139,7 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
         <StarRating rating={product.averageRating} size="sm" />
         
         {/* Category & Company */}
-        <div className="flex items-center gap-2 text-xs text-gray-500">
+        <div className="min-h-[2rem] flex flex-wrap items-start gap-2 text-xs text-gray-500">
           {product.category && (
             <span className="bg-gray-100 px-2 py-1 rounded">
               {product.category.name}
@@ -152,7 +152,7 @@ export function ProductCard({ product, lang, dictionary }: ProductCardProps) {
           )}
         </div>
         
-        <div className="flex items-end gap-1.5">
+        <div className="min-h-[3rem] flex items-end gap-1.5">
           
           {product.discountPercent > 0 && product.discountedPrice ? (
             <>
