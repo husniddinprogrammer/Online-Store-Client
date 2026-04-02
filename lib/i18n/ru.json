@@ -162,6 +162,7 @@
     "roleAdmin": "Администратор",
     "roleDelivery": "Доставщик",
     "roleSuperAdmin": "Супер администратор",
+    "roleViewer": "Наблюдатель",
     "emailStatus": "Статус почты",
     "verified": "Подтверждена",
     "unverified": "Не подтверждена",
@@ -174,6 +175,10 @@
     "maximum": "Максимум",
     "balanceAfterTopUp": "После пополнения",
     "topUpSuccess": "Баланс успешно пополнен",
-    "topUpError": "Произошла ошибка. Попробуйте снова."
+    "topUpError": "Произошла ошибка. Попробуйте снова.",
+    "viewerAccessDeniedTitle": "Для роли Viewer доступ запрещён",
+    "viewerAccessDeniedMessage": "Вход в личный кабинет недоступен.",
+    "viewerAccessDeniedHint": "Зарегистрируйтесь с другого аккаунта или создайте новый аккаунт.",
+    "goHome": "Перейти на главную"
   }
 }

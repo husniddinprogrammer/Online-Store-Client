@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useState, useEffect } from 'react'
+import React, { use, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/lib/store/authStore'
@@ -195,9 +195,8 @@ export default function OrdersPage({ params }: PageProps) {
                     const isExpanded = expandedId === order.id
                     const hasItems = (order.items?.length ?? 0) > 0
                     return (
-                      <>
+                      <React.Fragment key={order.id}>
                         <tr
-                          key={order.id}
                           className="border-b border-gray-50 dark:border-gray-700/50 hover:bg-gray-50/50 dark:hover:bg-gray-700/20 transition-colors"
                         >
                           <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">
@@ -252,7 +251,7 @@ export default function OrdersPage({ params }: PageProps) {
                             </td>
                           </tr>
                         )}
-                      </>
+                      </React.Fragment>
                     )
                   })}
                 </tbody>

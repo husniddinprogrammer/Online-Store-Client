@@ -3,6 +3,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { FooterBottom } from '@/components/layout/FooterBottom'
 import { ProfileSidebar } from '@/components/profile/ProfileSidebar'
+import { ProfileProtection } from '@/components/profile/ProfileProtection'
 
 export default async function ProfileLayout({
   children,
@@ -15,7 +16,7 @@ export default async function ProfileLayout({
   const dict = await getDictionary(lang as Locale)
 
   return (
-    <>
+    <ProfileProtection lang={lang} dict={dict}>
       <Navbar lang={lang} dictionary={dict} />
 
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
@@ -39,6 +40,6 @@ export default async function ProfileLayout({
 
       <Footer lang={lang} dictionary={dict} />
       <FooterBottom dictionary={dict} />
-    </>
+    </ProfileProtection>
   )
 }

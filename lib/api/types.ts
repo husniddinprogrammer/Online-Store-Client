@@ -27,7 +27,7 @@ export interface AuthResponse {
   userId: number
   email: string
   name: string
-  role: 'CUSTOMER' | 'ADMIN' | 'DELIVERY' | 'SUPER_ADMIN'
+  role: 'CUSTOMER' | 'ADMIN' | 'DELIVERY' | 'SUPER_ADMIN' | 'VIEWER'
 }
 
 // ─── User ─────────────────────────────────────────────────────────────────────
@@ -41,7 +41,7 @@ export interface UserResponse {
   phoneNumber: string | null
   balance: number
   blocked: boolean
-  role: 'CUSTOMER' | 'ADMIN' | 'DELIVERY' | 'SUPER_ADMIN'
+  role: 'CUSTOMER' | 'ADMIN' | 'DELIVERY' | 'SUPER_ADMIN' | 'VIEWER'
   lastLoginAt: string
   createdAt: string
   emailVerified: boolean

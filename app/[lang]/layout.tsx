@@ -27,7 +27,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
     <ThemeProvider>
       <QueryProvider>
         <AuthInitializer />
-        <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#0a0f1e]">
+        <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#0a0f1e]" suppressHydrationWarning>
           {children}
         </div>
         <Toaster />

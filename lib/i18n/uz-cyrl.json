@@ -162,6 +162,7 @@
     "roleAdmin": "Администратор",
     "roleDelivery": "Етказиб берувчи",
     "roleSuperAdmin": "Бош администратор",
+    "roleViewer": "Томошабин",
     "emailStatus": "Электрон почта ҳолати",
     "verified": "Тасдиқланган",
     "unverified": "Тасдиқланмаган",
@@ -174,6 +175,10 @@
     "maximum": "Максимум",
     "balanceAfterTopUp": "Тўлдирилгандан кейин",
     "topUpSuccess": "Баланс муваффақиятли тўлдирилди",
-    "topUpError": "Хатолик юз берди. Қайта уриниб кўринг."
+    "topUpError": "Хатолик юз берди. Қайта уриниб кўринг.",
+    "viewerAccessDeniedTitle": "Viewer рольга киришга рухсат йўқ",
+    "viewerAccessDeniedMessage": "Personal кабинетга киришга рухсат берилмаган.",
+    "viewerAccessDeniedHint": "Бошқа accountдан рўйхатдан ўтинг ёки бошқа янги account очинг.",
+    "goHome": "Бош саҳифага ўтиш"
   }
 }

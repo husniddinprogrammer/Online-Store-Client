@@ -194,6 +194,7 @@ export type Dictionary = {
     roleAdmin: string
     roleDelivery: string
     roleSuperAdmin: string
+    roleViewer: string
     emailStatus: string
     verified: string
     unverified: string
@@ -207,5 +208,9 @@ export type Dictionary = {
     balanceAfterTopUp: string
     topUpSuccess: string
     topUpError: string
+    viewerAccessDeniedTitle: string
+    viewerAccessDeniedMessage: string
+    viewerAccessDeniedHint: string
+    goHome: string
   }
 }

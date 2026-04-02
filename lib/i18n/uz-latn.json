@@ -162,6 +162,7 @@
     "roleAdmin": "Administrator",
     "roleDelivery": "Yetkazib beruvchi",
     "roleSuperAdmin": "Bosh administrator",
+    "roleViewer": "Tomoshabin",
     "emailStatus": "Email holati",
     "verified": "Tasdiqlangan",
     "unverified": "Tasdiqlanmagan",
@@ -174,6 +175,10 @@
     "maximum": "Maksimum",
     "balanceAfterTopUp": "To'ldirilgandan keyin",
     "topUpSuccess": "Balans muvaffaqiyatli to'ldirildi",
-    "topUpError": "Xatolik yuz berdi. Qayta urinib ko'ring."
+    "topUpError": "Xatolik yuz berdi. Qayta urinib ko'ring.",
+    "viewerAccessDeniedTitle": "Viewer rolega kirishga ruxsat yo'q",
+    "viewerAccessDeniedMessage": "Personal kabinetga kirishga ruxsat berilmagan.",
+    "viewerAccessDeniedHint": "Boshqa accountdan ro'yxatdan o'ting yoki boshqa yangi account oching.",
+    "goHome": "Bosh sahifaga o'tish"
   }
 }

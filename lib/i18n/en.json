@@ -162,6 +162,7 @@
     "roleAdmin": "Administrator",
     "roleDelivery": "Delivery Agent",
     "roleSuperAdmin": "Super Administrator",
+    "roleViewer": "Viewer",
     "emailStatus": "Email Status",
     "verified": "Verified",
     "unverified": "Unverified",
@@ -174,6 +175,10 @@
     "maximum": "Maximum",
     "balanceAfterTopUp": "Balance After Top Up",
     "topUpSuccess": "Balance topped up successfully",
-    "topUpError": "Something went wrong. Please try again."
+    "topUpError": "Something went wrong. Please try again.",
+    "viewerAccessDeniedTitle": "Viewer role has no access",
+    "viewerAccessDeniedMessage": "Access to the personal cabinet is not allowed.",
+    "viewerAccessDeniedHint": "Register with another account or create a new one.",
+    "goHome": "Go to home page"
   }
 }
