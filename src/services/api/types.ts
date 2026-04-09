@@ -6,6 +6,21 @@ export interface ApiResponse<T> {
   data: T
 }
 
+export type MaybeApiResponse<T> = ApiResponse<T> | T
+
+export function unwrapApiData<T>(payload: MaybeApiResponse<T>): T {
+  if (
+    typeof payload === 'object' &&
+    payload !== null &&
+    'success' in payload &&
+    'data' in payload
+  ) {
+    return payload.data as T
+  }
+
+  return payload as T
+}
+
 export interface PaginatedData<T> {
   content: T[]
   totalElements: number

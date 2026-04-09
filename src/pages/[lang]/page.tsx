@@ -41,7 +41,7 @@ function HomeContent({ lang, dict }: { lang: string; dict: Dictionary }) {
     isLoading: productsLoading,
     refetch: refetchProducts,
     isError: productsError,
-  } = useProducts({ size: 20, search })
+  } = useProducts({ size: 20, search, sort: 'NEWEST' })
 
   const posters = postersData?.content ?? []
   const categories = categoriesData?.content ?? []
@@ -129,7 +129,7 @@ function HomeContent({ lang, dict }: { lang: string; dict: Dictionary }) {
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">
             {search
-              ? `"${search}" � ${dict.common.searchResults}`
+              ? `"${search}" - ${dict.common.searchResults}`
               : dict.home.latestProducts}
           </h2>
           {!search && (

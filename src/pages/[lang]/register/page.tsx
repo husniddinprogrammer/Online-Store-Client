@@ -86,7 +86,7 @@ export default function RegisterPage({ params }: RegisterPageProps) {
   const onSubmit = async (data: RegisterFormData) => {
     setServerError('')
     try {
-      const response = await auth.register({
+      const authData = await auth.register({
         name: data.name,
         surname: data.surname,
         email: data.email,
@@ -94,7 +94,7 @@ export default function RegisterPage({ params }: RegisterPageProps) {
         phoneNumber: data.phone,
         birthdayAt: data.birthday,
       })
-      setAuth(response.data.data)
+      setAuth(authData)
       router.push(`/${lang}/profile`)
     } catch (err: unknown) {
       const message =
@@ -245,9 +245,9 @@ export default function RegisterPage({ params }: RegisterPageProps) {
               <p className="text-xs text-gray-500">
                 Parol kamida 6 ta belgidan iborat bo'lishi kerak va quyidagilarni o'z
                 ichiga olishi shart:
-                <br />� Kamida bitta katta harf (A-Z)
-                <br />� Kamida bitta kichik harf (a-z)
-                <br />� Kamida bitta raqam (0-9)
+                <br />- Kamida bitta katta harf (A-Z)
+                <br />- Kamida bitta kichik harf (a-z)
+                <br />- Kamida bitta raqam (0-9)
               </p>
             </div>
 
@@ -260,7 +260,7 @@ export default function RegisterPage({ params }: RegisterPageProps) {
                 type="password"
                 autoComplete="new-password"
                 {...register('confirmPassword')}
-                placeholder="��������"
+                placeholder="********"
                 className={fieldClass(!!errors.confirmPassword)}
               />
               {errors.confirmPassword && (

@@ -1,6 +1,8 @@
 import axiosInstance from './axios'
+import { unwrapApiData } from './types'
 import type {
   ApiResponse,
+  MaybeApiResponse,
   PaginatedData,
   AuthResponse,
   CategoryResponse,
@@ -41,17 +43,23 @@ export interface ForgotPasswordPayload {
 
 export const auth = {
   login: (payload: LoginPayload) =>
-    axiosInstance.post<ApiResponse<AuthResponse>>('/api/auth/login', payload),
+    axiosInstance
+      .post<MaybeApiResponse<AuthResponse>>('/api/auth/login', payload)
+      .then(({ data }) => unwrapApiData(data)),
 
   register: (payload: RegisterPayload) =>
-    axiosInstance.post<ApiResponse<AuthResponse>>('/api/auth/register', payload),
+    axiosInstance
+      .post<MaybeApiResponse<AuthResponse>>('/api/auth/register', payload)
+      .then(({ data }) => unwrapApiData(data)),
 
   logout: () => axiosInstance.post<ApiResponse<null>>('/api/auth/logout'),
 
   refreshToken: (refreshToken: string) =>
-    axiosInstance.post<ApiResponse<AuthResponse>>('/api/auth/refresh-token', {
-      refreshToken,
-    }),
+    axiosInstance
+      .post<MaybeApiResponse<AuthResponse>>('/api/auth/refresh-token', {
+        refreshToken,
+      })
+      .then(({ data }) => unwrapApiData(data)),
 
   forgotPassword: (payload: ForgotPasswordPayload) =>
     axiosInstance.post<ApiResponse<null>>('/api/auth/forgot-password', payload),
@@ -226,11 +234,11 @@ export const users = {
     surname: string
     phoneNumber?: string
     birthdayAt?: string
-  }) => axiosInstance.put<ApiResponse<UserResponse>>('/users/me', payload),
+  }) => axiosInstance.put<ApiResponse<UserResponse>>('/api/users/me', payload),
   changePassword: (payload: { oldPassword: string; newPassword: string }) =>
-    axiosInstance.put<ApiResponse<null>>('/users/me/change-password', payload),
+    axiosInstance.put<ApiResponse<null>>('/api/users/me/change-password', payload),
   topUp: (amount: number) =>
-    axiosInstance.post<ApiResponse<UserResponse>>('/users/balance/top-up', { amount }),
+    axiosInstance.post<ApiResponse<UserResponse>>('/api/users/balance/top-up', { amount }),
 }
 
 // ──────────────────────────────────────────────

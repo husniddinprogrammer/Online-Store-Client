@@ -1,5 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios'
 import { defaultLocale } from '@/i18n'
+import { unwrapApiData } from './types'
+import type { AuthResponse, MaybeApiResponse } from './types'
 
 export const BASE_URL = 'https://api.online-store-beta.uz'
 export const BASE_IMAGE_URL = 'https://api.online-store-beta.uz'
@@ -76,12 +78,16 @@ axiosInstance.interceptors.response.use(
       }
 
       try {
-        const { data } = await axios.post(`${BASE_URL}/api/auth/refresh-token`, {
-          refreshToken,
-        })
+        const { data } = await axios.post<MaybeApiResponse<AuthResponse>>(
+          `${BASE_URL}/api/auth/refresh-token`,
+          {
+            refreshToken,
+          }
+        )
 
-        const newAccessToken = data?.data?.accessToken ?? data?.accessToken
-        const newRefreshToken = data?.data?.refreshToken ?? data?.refreshToken
+        const authData = unwrapApiData(data)
+        const newAccessToken = authData.accessToken
+        const newRefreshToken = authData.refreshToken
 
         window.localStorage.setItem('accessToken', newAccessToken)
         if (newRefreshToken) {

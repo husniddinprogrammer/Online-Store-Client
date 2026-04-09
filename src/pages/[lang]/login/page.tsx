@@ -46,8 +46,8 @@ export default function LoginPage({ params }: LoginPageProps) {
   const onSubmit = async (data: LoginFormData) => {
     setServerError('')
     try {
-      const response = await auth.login(data)
-      setAuth(response.data.data)
+      const authData = await auth.login(data)
+      setAuth(authData)
       queryClient.invalidateQueries({ queryKey: ['me'] })
       router.push(`/${lang}/profile`)
     } catch (err: unknown) {
@@ -137,7 +137,7 @@ export default function LoginPage({ params }: LoginPageProps) {
                 type="password"
                 autoComplete="current-password"
                 {...register('password')}
-                placeholder="��������"
+                placeholder="********"
                 className={`px-4 py-3 rounded-xl border text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
                   errors.password
                     ? 'border-red-400 dark:border-red-600'
